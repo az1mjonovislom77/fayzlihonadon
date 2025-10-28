@@ -12,8 +12,8 @@ def check_image_size(image):
 
 class Home(models.Model):
     name = models.CharField(max_length=200, blank=True, null=True)
-    price = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
-    pricePerSqm = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
+    price = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
+    pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
     area = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
     rooms = models.IntegerField(blank=True, null=True)
     floor = models.IntegerField(blank=True, null=True)
