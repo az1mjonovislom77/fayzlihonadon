@@ -12,6 +12,7 @@ ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
 #
 # AUTH_USER_MODEL = 'user.User'
 
+
 ENVIRONMENT = config('ENVIRONMENT', default='local')
 
 LOCAL_APPS = [
