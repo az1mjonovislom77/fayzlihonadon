@@ -64,7 +64,7 @@ class InteriorPhotosSerializer(serializers.ModelSerializer):
 class QualitiesSerializer(serializers.ModelSerializer):
     class Meta:
         model = Qualities
-        fields = ['id', 'title', 'title_uz', 'title_en', 'title_ru', 'title_zh-hans', 'title_ar']
+        fields = ['id', 'title', 'title_uz', 'title_en', 'title_ru', 'title_zh_hans', 'title_ar']
 
 
 class BasementSerializer(serializers.ModelSerializer):
@@ -82,12 +82,12 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'name', 'name_uz', 'name_en', 'name_ru', 'name_zh-hans', 'name_ar', 'price', 'pricePerSqm',
+        fields = ['id', 'name', 'name_uz', 'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm',
                   'area', 'rooms', 'floor',
                   'totalFloors', 'yearBuilt',
-                  'description', 'description_uz', 'description_en', 'description_ru', 'description_zh-hans',
-                  'description_ar', 'type', 'type_uz', 'type_en', 'type_ru', 'type_zh-hans', 'type_ar', 'region',
-                  'region_uz', 'region_en', 'region_ru', 'region_zh-hans', 'region_ar',
+                  'description', 'description_uz', 'description_en', 'description_ru', 'description_zh_hans',
+                  'description_ar', 'type', 'type_uz', 'type_en', 'type_ru', 'type_zh_hans', 'type_ar', 'region',
+                  'region_uz', 'region_en', 'region_ru', 'region_zh_hans', 'region_ar',
                   'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos']
 
 
