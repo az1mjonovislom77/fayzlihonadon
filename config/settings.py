@@ -9,8 +9,8 @@ SECRET_KEY = config('SECRET_KEY')
 DEBUG = config('DEBUG', default=True, cast=bool)
 
 ALLOWED_HOSTS = config('ALLOWED_HOSTS', default='', cast=Csv())
-#
-# AUTH_USER_MODEL = 'user.User'
+
+AUTH_USER_MODEL = 'user.User'
 
 
 ENVIRONMENT = config('ENVIRONMENT', default='local')
@@ -25,7 +25,8 @@ LOCAL_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'home.apps.HomeConfig',
-    'utils.apps.UtilsConfig'
+    'utils.apps.UtilsConfig',
+    'user.apps.UserConfig',
 ]
 
 THIRD_PARTY_APPS = [
