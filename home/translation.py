@@ -5,7 +5,7 @@ from .models import Home, Qualities
 
 @register(Home)
 class HomeTranslation(TranslationOptions):
-    fields = ('name', 'type', 'region')
+    fields = ('name', 'type', 'region', 'description')
 
 
 @register(Qualities)
