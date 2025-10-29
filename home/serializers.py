@@ -116,12 +116,13 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'name', 'name_uz',
-                  'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor',
-                  'totalFloors', 'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
-                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru', 'type_zh_hans',
-                  'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans', 'region_ar',
-                  'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
+        fields = ['id', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status', 'status_uz',
+                  'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
+                  'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
+                  'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
+                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
+                  'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
+                  'region_ar', 'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
 
 
 class HomeSerializerPost(serializers.ModelSerializer):
@@ -133,12 +134,13 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'name', 'name_uz',
-                  'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor',
-                  'totalFloors', 'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
-                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru', 'type_zh_hans',
-                  'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans', 'region_ar',
-                  'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
+        fields = ['id', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status', 'status_uz',
+                  'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
+                  'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
+                  'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
+                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
+                  'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
+                  'region_ar', 'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
 
     def create(self, validated_data):
         request = self.context.get('request')

@@ -18,6 +18,7 @@ class Home(models.Model):
     entrance = models.IntegerField(null=True, blank=True)
     totalprice = models.IntegerField(null=True, blank=True)
     totalarea = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
+    status = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
     pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
