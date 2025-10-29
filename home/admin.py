@@ -1,5 +1,5 @@
 from django.contrib import admin
-from .models import (Home, HomeImage, Qualities, FloorPlan, MasterPlan, InteriorPhotos, Basement, )
+from .models import (Home, HomeImage, Qualities, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouse, )
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -26,6 +26,11 @@ class MasterPlanInline(admin.TabularInline):
 class InteriorPhotosInline(admin.TabularInline):
     model = InteriorPhotos
     extra = 1
+
+
+@admin.register(CommonHouse)
+class CommonHouseAdmin(admin.ModelAdmin):
+    list_display = ('id', 'number', 'entrance')
 
 
 @admin.register(Home)

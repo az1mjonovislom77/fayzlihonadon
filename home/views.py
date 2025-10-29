@@ -3,8 +3,8 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Home, Basement
-from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer
+from .models import Home, Basement, CommonHouse
+from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer, CommonHouseSerializer
 
 
 @extend_schema(tags=['Home'])
@@ -48,6 +48,27 @@ class BasementAPIView(APIView):
 
     def post(self, request):
         serializer = BasementSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['CommonHouse'])
+class CommonHouseAPIView(APIView):
+    serializer_class = CommonHouseSerializer
+
+    def get(self, request):
+        try:
+            commonhouse = CommonHouse.objects.all()
+        except CommonHouse.DoesNotExist:
+            return Response({"error": "CommonHouse topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CommonHouseSerializer(commonhouse, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CommonHouseSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

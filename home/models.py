@@ -1,14 +1,27 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator
+from django.core.validators import FileExtensionValidator, MinValueValidator
 
 from utils.compressor import optimize_image_to_webp, check_image_size
 
 
+class CommonHouse(models.Model):
+    number = models.IntegerField()
+    entrance = models.IntegerField()
+
+    def __str__(self):
+        return f'{str(self.number)}'
+
+
 class Home(models.Model):
+    commonhouse = models.ForeignKey(CommonHouse, on_delete=models.SET_NULL, null=True, blank=True)
+    home_number = models.IntegerField(null=True, blank=True)
+    entrance = models.IntegerField(null=True, blank=True)
+    totalprice = models.IntegerField(null=True, blank=True)
+    totalarea = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
     pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
-    area = models.DecimalField(decimal_places=2, max_digits=10, blank=True, null=True)
+    area = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
     rooms = models.IntegerField(blank=True, null=True)
     floor = models.IntegerField(blank=True, null=True)
     totalFloors = models.IntegerField(blank=True, null=True)
