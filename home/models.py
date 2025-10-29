@@ -1,20 +1,20 @@
 from django.db import models
-from django.core.validators import FileExtensionValidator, MinValueValidator
+from django.core.validators import FileExtensionValidator
 
 from utils.compressor import optimize_image_to_webp, check_image_size
 
 
 class CommonHouse(models.Model):
     number = models.IntegerField()
-    entrance = models.IntegerField()
+    entrance = models.IntegerField(null=True, blank=True)
 
     def __str__(self):
-        return f'{str(self.number)}'
+        return str(self.number)
 
 
 class Home(models.Model):
     commonhouse = models.ForeignKey(CommonHouse, on_delete=models.SET_NULL, null=True, blank=True)
-    home_number = models.IntegerField(null=True, blank=True)
+    home_number = models.CharField(null=True, blank=True)
     entrance = models.IntegerField(null=True, blank=True)
     totalprice = models.IntegerField(null=True, blank=True)
     totalarea = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
@@ -32,7 +32,7 @@ class Home(models.Model):
     region = models.CharField(max_length=100, blank=True, null=True)
 
     def __str__(self):
-        return self.name
+        return str(self.id)
 
 
 class HomeImage(models.Model):
@@ -142,7 +142,7 @@ class Basement(models.Model):
     pricePerSqm = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
 
     def __str__(self):
-        return f'{self.area} {self.price} {self.pricePerSqm}'
+        return self.home.name
 
 
 class BasementImage(models.Model):
