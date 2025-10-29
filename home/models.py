@@ -1,13 +1,7 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-from django.core.exceptions import ValidationError
 
-from utils.compressor import optimize_image_to_webp
-
-
-def check_image_size(image):
-    if image.size > 10 * 1024 * 1024:
-        raise ValidationError("The image is too long")
+from utils.compressor import optimize_image_to_webp, check_image_size
 
 
 class Home(models.Model):

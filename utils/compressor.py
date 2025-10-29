@@ -5,6 +5,7 @@ from django.core.files.base import ContentFile
 from PIL import Image
 import pillow_heif
 from django.core.files.uploadedfile import InMemoryUploadedFile
+from django.core.exceptions import ValidationError
 
 pillow_heif.register_heif_opener()
 
@@ -34,3 +35,8 @@ def optimize_image_to_webp(image_field, quality: int = 80, max_width=1200, ) -> 
     )
 
     return new_image
+
+
+def check_image_size(image):
+    if image.size > 10 * 1024 * 1024:
+        raise ValidationError("The image is too long")
