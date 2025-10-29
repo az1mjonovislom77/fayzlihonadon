@@ -3,8 +3,8 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import HomePage
-from .serializers import HomePageSerializer
+from .models import HomePage, AdvertisementBanner
+from .serializers import HomePageSerializer, AdvertisementBannerSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -22,6 +22,27 @@ class HomePageAPIView(APIView):
 
     def post(self, request):
         serializer = HomePageSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['AdvertisementBanner'])
+class AdvertisementBannerAPIView(APIView):
+    serializer_class = AdvertisementBannerSerializer
+
+    def get(self, request):
+        try:
+            homepage = AdvertisementBanner.objects.all()
+        except AdvertisementBanner.DoesNotExist:
+            return Response({"error": "AdvertisementBanner topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = AdvertisementBannerSerializer(homepage, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = AdvertisementBannerSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
