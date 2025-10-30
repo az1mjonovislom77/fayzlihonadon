@@ -116,7 +116,8 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status', 'status_uz',
+        fields = ['id', 'buildingBlock', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
+                  'status_uz',
                   'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
                   'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
                   'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
@@ -134,7 +135,8 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status', 'status_uz',
+        fields = ['id', 'buildingBlock', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
+                  'status_uz',
                   'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
                   'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
                   'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',

@@ -13,6 +13,7 @@ class CommonHouse(models.Model):
 
 
 class Home(models.Model):
+    buildingBlock = models.CharField(null=True, blank=True, max_length=200)
     commonhouse = models.ForeignKey(CommonHouse, on_delete=models.SET_NULL, null=True, blank=True)
     home_number = models.CharField(null=True, blank=True)
     entrance = models.IntegerField(null=True, blank=True)
