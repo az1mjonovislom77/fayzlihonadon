@@ -27,7 +27,7 @@ class Home(models.Model):
     rooms = models.IntegerField(blank=True, null=True)
     floor = models.IntegerField(blank=True, null=True)
     totalFloors = models.IntegerField(blank=True, null=True)
-    yearBuilt = models.DateField(blank=True, null=True)
+    yearBuilt = models.DateField(blank=True, null=True, auto_now_add=True)
     description = models.TextField(max_length=500, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
     region = models.CharField(max_length=100, blank=True, null=True)
