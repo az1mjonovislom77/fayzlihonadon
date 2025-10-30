@@ -1,15 +1,6 @@
-import json
-
 from rest_framework import serializers
 
-from .models import Home, HomeImage, Qualities, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage, \
-    CommonHouse
-
-
-class CommonHouseSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = CommonHouse
-        fields = '__all__'
+from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage
 
 
 class HomeImageSerializer(serializers.ModelSerializer):
@@ -68,12 +59,6 @@ class InteriorPhotosSerializer(serializers.ModelSerializer):
         return None
 
 
-class QualitiesSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Qualities
-        fields = ['id', 'title', 'title_uz', 'title_en', 'title_ru', 'title_zh_hans', 'title_ar']
-
-
 class BasementImageSerializer(serializers.ModelSerializer):
     image = serializers.SerializerMethodField()
 
@@ -112,18 +97,17 @@ class HomeSerializerGet(serializers.ModelSerializer):
     floorplan = FloorPlanSerializer(source='floorplan_set', many=True, required=False)
     masterplan = MasterPlanSerializer(source='masterplan_set', many=True, required=False)
     interiorphotos = InteriorPhotosSerializer(source='interiorphotos_set', many=True, required=False)
-    qualities = QualitiesSerializer(source='qualities_set', many=True, required=False)
 
     class Meta:
         model = Home
-        fields = ['id', 'buildingBlock', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
-                  'status_uz',
-                  'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
-                  'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
+        fields = ['id', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
+                  'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
+                  'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
+                  'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
                   'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
                   'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
                   'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
-                  'region_ar', 'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
+                  'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', ]
 
 
 class HomeSerializerPost(serializers.ModelSerializer):
@@ -131,18 +115,17 @@ class HomeSerializerPost(serializers.ModelSerializer):
     floorplan = FloorPlanSerializer(source='floorplan_set', many=True, required=False)
     masterplan = MasterPlanSerializer(source='masterplan_set', many=True, required=False)
     interiorphotos = InteriorPhotosSerializer(source='interiorphotos_set', many=True, required=False)
-    qualities = QualitiesSerializer(source='qualities_set', many=True, required=False)
 
     class Meta:
         model = Home
-        fields = ['id', 'buildingBlock', 'commonhouse', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
-                  'status_uz',
-                  'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en', 'name_ru',
-                  'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
+        fields = ['id', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
+                  'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
+                  'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
+                  'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
                   'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
                   'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
                   'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
-                  'region_ar', 'images', 'qualities', 'floorplan', 'masterplan', 'interiorphotos', ]
+                  'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', ]
 
     def create(self, validated_data):
         request = self.context.get('request')
@@ -152,13 +135,10 @@ class HomeSerializerPost(serializers.ModelSerializer):
         masterplan_files = request.FILES.getlist('masterplan')
         interior_files = request.FILES.getlist('interiorphotos')
 
-        qualities_raw = request.data.get('qualities')
-
         validated_data.pop('homeimage_set', None)
         validated_data.pop('floorplan_set', None)
         validated_data.pop('masterplan_set', None)
         validated_data.pop('interiorphotos_set', None)
-        validated_data.pop('qualities_set', None)
 
         home = Home.objects.create(**validated_data)
 
@@ -173,15 +153,5 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
         for img in interior_files:
             InteriorPhotos.objects.create(home=home, image=img)
-
-        if qualities_raw:
-            try:
-                qualities_data = json.loads(qualities_raw)
-                for q in qualities_data:
-                    title = q.get('title')
-                    if title:
-                        Qualities.objects.create(home=home, title=title)
-            except json.JSONDecodeError:
-                print("❌ Qualities JSON parse error — noto‘g‘ri format.")
 
         return home

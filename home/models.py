@@ -4,17 +4,9 @@ from django.core.validators import FileExtensionValidator
 from utils.compressor import optimize_image_to_webp, check_image_size
 
 
-class CommonHouse(models.Model):
-    number = models.IntegerField()
-    entrance = models.IntegerField(null=True, blank=True)
-
-    def __str__(self):
-        return str(self.number)
-
-
 class Home(models.Model):
     buildingBlock = models.CharField(null=True, blank=True, max_length=200)
-    commonhouse = models.ForeignKey(CommonHouse, on_delete=models.SET_NULL, null=True, blank=True)
+    qualities = models.JSONField(null=True, blank=True, max_length=500)
     home_number = models.CharField(null=True, blank=True)
     entrance = models.IntegerField(null=True, blank=True)
     totalprice = models.IntegerField(null=True, blank=True)
@@ -57,14 +49,6 @@ class HomeImage(models.Model):
         db_table = 'homeimage'
         verbose_name = 'Home image'
         verbose_name_plural = 'Home images'
-
-
-class Qualities(models.Model):
-    title = models.CharField(max_length=200)
-    home = models.ForeignKey(Home, on_delete=models.CASCADE)
-
-    def __str__(self):
-        return self.title
 
 
 class FloorPlan(models.Model):

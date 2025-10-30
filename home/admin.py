@@ -1,15 +1,10 @@
 from django.contrib import admin
-from .models import (Home, HomeImage, Qualities, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouse, )
+from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, )
 from modeltranslation.admin import TranslationAdmin
 
 
 class HomeImageInline(admin.TabularInline):
     model = HomeImage
-    extra = 1
-
-
-class QualitiesInline(admin.TabularInline):
-    model = Qualities
     extra = 1
 
 
@@ -28,28 +23,18 @@ class InteriorPhotosInline(admin.TabularInline):
     extra = 1
 
 
-@admin.register(CommonHouse)
-class CommonHouseAdmin(admin.ModelAdmin):
-    list_display = ('id', 'number', 'entrance')
-
-
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'price', 'area', 'rooms', 'region', 'type')
     list_filter = ('region', 'type', 'rooms')
     search_fields = ('name', 'region', 'description')
-    inlines = [HomeImageInline, QualitiesInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
+    inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
 
 
 @admin.register(HomeImage)
 class HomeImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'home')
     search_fields = ('home__name',)
-
-
-@admin.register(Qualities)
-class QualitiesAdmin(TranslationAdmin):
-    list_display = ('home', 'id', 'title')
 
 
 @admin.register(FloorPlan)

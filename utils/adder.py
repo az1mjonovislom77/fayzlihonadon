@@ -42,14 +42,57 @@ def import_homes_from_json(json_path):
             'type_ar': "شقة",
         }
 
+        qualities = {
+            'qualities_uz': [
+                "24/7 Xavfsizlik",
+                "Avtoturargoh",
+                "Bolalar maydonchasi",
+                "Lift",
+                "Balkon",
+                "Bog‘"
+            ],
+            'qualities_en': [
+                "24/7 Security",
+                "Parking",
+                "Playground",
+                "Elevator",
+                "Balcony",
+                "Garden"
+            ],
+            'qualities_ru': [
+                "24/7 Охрана",
+                "Парковка",
+                "Детская площадка",
+                "Лифт",
+                "Балкон",
+                "Сад"
+            ],
+            'qualities_zh_hans': [
+                "24/7 安全",
+                "停车场",
+                "儿童游乐场",
+                "电梯",
+                "阳台",
+                "花园"
+            ],
+            'qualities_ar': [
+                "أمن على مدار الساعة",
+                "موقف سيارات",
+                "ملعب أطفال",
+                "مصعد",
+                "شرفة",
+                "حديقة"
+            ]
+        }
+
         item.update(descriptions)
         item.update(regions)
         item.update(types)
+        item.update(qualities)
 
         filtered = {k: v for k, v in item.items() if k in model_fields}
 
         Home.objects.create(**filtered)
         created_count += 1
 
-    print(
-        f"✅ {created_count} ta yozuv bazaga saqlandi (id e’tiborga olinmadi, description, region va type 5 tilda qo‘shildi).")
+    print(f"✅ {created_count} ta yozuv bazaga saqlandi (qualities 5 tilda).")
