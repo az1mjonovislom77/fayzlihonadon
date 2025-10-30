@@ -13,6 +13,7 @@ def import_homes_from_json(json_path):
     created_count = 0
 
     for item in data:
+
         item.pop('id', None)
 
         if 'pricePerArea' in item:
@@ -25,7 +26,17 @@ def import_homes_from_json(json_path):
             'description_zh_hans': "明亮的公寓，布局合理，位于环保区域",
             'description_ar': "شقة مشرقة ذات تخطيط جيد في منطقة صديقة للبيئة",
         }
+
+        regions = {
+            'region_uz': "Qarshi",
+            'region_en': "Qarshi",
+            'region_ru': "Карши",
+            'region_zh_hans': "卡尔希",
+            'region_ar': "قارشي",
+        }
+
         item.update(descriptions)
+        item.update(regions)
 
         filtered = {k: v for k, v in item.items() if k in model_fields}
 
@@ -33,4 +44,4 @@ def import_homes_from_json(json_path):
         created_count += 1
 
     print(
-        f"✅ {created_count} ta yozuv bazaga saqlandi (id e’tiborga olinmadi, 5 tildagi description maydonlari to‘ldirildi).")
+        f"✅ {created_count} ta yozuv bazaga saqlandi (id e’tiborga olinmadi, 5 tildagi description va region to‘ldirildi).")
