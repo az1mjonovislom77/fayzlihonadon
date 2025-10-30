@@ -1,6 +1,7 @@
 from rest_framework import serializers
 
-from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage
+from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage, CommonHouse, \
+    CommonHouseMainImage, CommonHouseAdvImage
 
 
 class HomeImageSerializer(serializers.ModelSerializer):
@@ -155,3 +156,26 @@ class HomeSerializerPost(serializers.ModelSerializer):
             InteriorPhotos.objects.create(home=home, image=img)
 
         return home
+
+
+class CommonHouseAdvImageSerailizers(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CommonHouseAdvImage
+        fields = ['id', 'image']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+
+class CommonHouseSerializer(serializers.ModelSerializer):
+    images = HomeImageSerializer(source='commonhouseadvimage_set', many=True, required=False)
+
+    class Meta:
+        model = CommonHouse
+        fields = ['title', 'description', 'handover', 'country', 'region', 'district', 'street', 'house', 'langtitude',
+                  'images']
