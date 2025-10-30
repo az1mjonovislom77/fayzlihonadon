@@ -25,7 +25,7 @@ class InteriorPhotosInline(admin.TabularInline):
 
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'price', 'area', 'home_number', 'building_block')
+    list_display = ('id', 'name', 'price', 'area', 'home_number', 'buildingBlock')
     list_filter = ('region', 'type', 'rooms')
     search_fields = ('name', 'region', 'description')
     inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
