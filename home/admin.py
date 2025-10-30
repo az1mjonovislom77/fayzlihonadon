@@ -49,7 +49,7 @@ class HomeImageAdmin(admin.ModelAdmin):
 
 @admin.register(Qualities)
 class QualitiesAdmin(TranslationAdmin):
-    list_display = ('id', 'title', 'home')
+    list_display = ('home', 'id', 'title')
 
 
 @admin.register(FloorPlan)
