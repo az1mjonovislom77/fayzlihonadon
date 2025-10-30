@@ -172,10 +172,44 @@ class CommonHouseAdvImageSerailizers(serializers.ModelSerializer):
         return None
 
 
+class CommonHouseMainImageSerailizers(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CommonHouseMainImage
+        fields = ['id', 'image']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+
 class CommonHouseSerializer(serializers.ModelSerializer):
-    images = HomeImageSerializer(source='commonhouseadvimage_set', many=True, required=False)
+    commonadvimage = CommonHouseAdvImageSerailizers(source='commonhouseadvimage_set', many=True, required=False)
+    commonmainimage = CommonHouseMainImageSerailizers(source='commonhousemainimage_set', many=True, required=False)
 
     class Meta:
         model = CommonHouse
-        fields = ['title', 'description', 'handover', 'country', 'region', 'district', 'street', 'house', 'langtitude',
-                  'images']
+        fields = ['title', 'description', 'handover', 'country', 'region', 'district', 'street', 'house', 'latitude',
+                  'longitude', 'commonadvimage', 'commonmainimage']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+
+        commonhouseadvimage_files = request.FILES.getlist('commonadvimage')
+        commonhousemainimage_files = request.FILES.getlist('commonmainimage')
+
+        validated_data.pop('commonhouseadvimage_set', None)
+        validated_data.pop('commonhousemainimage_set', None)
+
+        commonhouse = CommonHouse.objects.create(**validated_data)
+
+        for img in commonhouseadvimage_files:
+            CommonHouseAdvImage.objects.create(commonhouse=commonhouse, image=img)
+
+        for img in commonhousemainimage_files:
+            CommonHouseMainImage.objects.create(commonhouse=commonhouse, image=img)
+
+        return commonhouse
