@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList, \
-    SocialMedia, Contacts
+    SocialMedia, Contacts, AboutCompany
 
 
 class HomePageImageSerializer(serializers.ModelSerializer):
@@ -92,4 +92,10 @@ class SocialMediaSerializer(serializers.ModelSerializer):
 class ContactsSerializer(serializers.ModelSerializer):
     class Meta:
         model = Contacts
+        fields = '__all__'
+
+
+class AboutCompanySerializer(serializers.ModelSerializer):
+    class Meta:
+        model = AboutCompany
         fields = '__all__'

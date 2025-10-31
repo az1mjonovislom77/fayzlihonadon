@@ -20,4 +20,4 @@ class CommonHouseAboutTranslation(TranslationOptions):
 
 @register(InProgress)
 class InProgressTranslation(TranslationOptions):
-    fields = ('title', 'stage')
+    fields = ('title', 'stage', 'description')

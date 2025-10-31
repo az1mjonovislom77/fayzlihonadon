@@ -287,6 +287,7 @@ class BasementImage(models.Model):
 
 class InProgress(models.Model):
     title = models.CharField(max_length=100)
+    description = models.CharField(null=True, blank=True)
     address = models.CharField(max_length=100, null=True, blank=True)
     progress = models.CharField(max_length=100, null=True, blank=True)
     stage = models.CharField(max_length=100, null=True, blank=True)

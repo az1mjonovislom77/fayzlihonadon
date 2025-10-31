@@ -3,9 +3,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts
+from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
-    SocialMediaSerializer, ContactsSerializer
+    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -121,6 +121,26 @@ class ContactsAPIView(APIView):
         except Contacts.DoesNotExist:
             return Response({"error": "Contacts topilmadi"}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(contacts, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['AboutCompany'], request=AboutCompanySerializer, responses=AboutCompanySerializer)
+class AboutCompanyAPIView(APIView):
+    serializer_class = AboutCompanySerializer
+
+    def get(self, request):
+        try:
+            aboutcompany = AboutCompany.objects.all()
+        except AboutCompany.DoesNotExist:
+            return Response({"error": "AboutCompany topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(aboutcompany, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):

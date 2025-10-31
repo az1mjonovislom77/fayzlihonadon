@@ -118,3 +118,13 @@ class Contacts(models.Model):
 
     def __str__(self):
         return self.full_address
+
+
+class AboutCompany(models.Model):
+    description = models.TextField(max_length=500, null=True, blank=True)
+    experience = models.CharField(null=True, blank=True, max_length=100)
+    ourobjects = models.CharField(null=True, blank=True, max_length=100)
+    guarantee = models.CharField(null=True, blank=True, max_length=100)
+
+    def __str__(self):
+        return f'{self.experience}{self.ourobjects}{self.guarantee}'
