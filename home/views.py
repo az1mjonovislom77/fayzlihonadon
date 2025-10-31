@@ -3,8 +3,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Home, Basement, CommonHouse
-from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer, CommonHouseSerializer
+from .models import Home, Basement, CommonHouse, CommonHouseAbout
+from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer, CommonHouseSerializer, \
+    CommonHouseAboutSerializer
 
 
 @extend_schema(tags=['Home'])
@@ -69,6 +70,27 @@ class CommonHouseAPIView(APIView):
 
     def post(self, request):
         serializer = CommonHouseSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['CommonHouseAbout'])
+class CommonHouseAboutAPIView(APIView):
+    serializer_class = CommonHouseAboutSerializer
+
+    def get(self, request):
+        try:
+            commonhouseabout = CommonHouseAbout.objects.all()
+        except CommonHouseAbout.DoesNotExist:
+            return Response({"error": "CommonHouseAbout topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = CommonHouseAboutSerializer(commonhouseabout, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = CommonHouseAboutSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

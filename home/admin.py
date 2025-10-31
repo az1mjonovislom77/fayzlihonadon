@@ -1,5 +1,6 @@
 from django.contrib import admin
-from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, )
+from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouseAdvImage,
+                     CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout, )
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -21,6 +22,35 @@ class MasterPlanInline(admin.TabularInline):
 class InteriorPhotosInline(admin.TabularInline):
     model = InteriorPhotos
     extra = 1
+
+
+class CommonHouseAdvInline(admin.TabularInline):
+    model = CommonHouseAdvImage
+    extra = 1
+
+
+class CommonHouseMainInline(admin.TabularInline):
+    model = CommonHouseMainImage
+    extra = 1
+
+
+class CommonHouseAboutInline(admin.TabularInline):
+    model = CommonHouseAboutImage
+    extra = 1
+
+
+@admin.register(CommonHouse)
+class CommonHouseAdmin(TranslationAdmin):
+    list_display = ('id', 'title', 'handover')
+    list_filter = ('title',)
+    inlines = [CommonHouseAdvInline, CommonHouseMainInline]
+
+
+@admin.register(CommonHouseAbout)
+class CommonHouseAdmin(TranslationAdmin):
+    list_display = ('id', 'projectarea')
+    list_filter = ('blocks',)
+    inlines = [CommonHouseAboutInline]
 
 
 @admin.register(Home)
@@ -50,6 +80,16 @@ class MasterPlanAdmin(admin.ModelAdmin):
 @admin.register(InteriorPhotos)
 class InteriorPhotosAdmin(admin.ModelAdmin):
     list_display = ('id', 'home')
+
+
+@admin.register(CommonHouseMainImage)
+class CommonHouseMainImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'commonhouse')
+
+
+@admin.register(CommonHouseAdvImage)
+class CommonHouseAdvImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'commonhouse')
 
 
 @admin.register(Basement)

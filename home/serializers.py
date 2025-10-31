@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage, CommonHouse, \
-    CommonHouseMainImage, CommonHouseAdvImage
+    CommonHouseMainImage, CommonHouseAdvImage, CommonHouseAboutImage, CommonHouseAbout
 
 
 class HomeImageSerializer(serializers.ModelSerializer):
@@ -101,7 +101,7 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
+        fields = ['id', 'commonhouse', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
                   'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
                   'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
                   'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
@@ -119,7 +119,7 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
+        fields = ['id', 'commonhouse', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
                   'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
                   'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
                   'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
@@ -192,8 +192,10 @@ class CommonHouseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonHouse
-        fields = ['title', 'description', 'handover', 'country', 'region', 'district', 'street', 'house', 'latitude',
-                  'longitude', 'commonadvimage', 'commonmainimage']
+        fields = ['title', 'title_en', 'title_uz', 'title_ru', 'title_zh_hans', 'title_ar', 'description',
+                  'description_uz', 'description_en', 'description_ru', 'description_zh_hans', 'description_ar',
+                  'handover', 'country', 'region', 'district', 'street', 'house', 'latitude', 'longitude',
+                  'commonadvimage', 'commonmainimage']
 
     def create(self, validated_data):
         request = self.context.get('request')
@@ -213,3 +215,41 @@ class CommonHouseSerializer(serializers.ModelSerializer):
             CommonHouseMainImage.objects.create(commonhouse=commonhouse, image=img)
 
         return commonhouse
+
+
+class CommonHouseAboutImageSerailizers(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CommonHouseMainImage
+        fields = ['id', 'image']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+
+class CommonHouseAboutSerializer(serializers.ModelSerializer):
+    images = CommonHouseAboutImageSerailizers(source='commonhouseaboutimage_set', many=True, required=False)
+
+    class Meta:
+        model = CommonHouseAbout
+        fields = ['id', 'commonhouse', 'description', 'description_uz', 'description_en', 'description_ru',
+                  'description_zh_hans', 'description_ar', 'blocks', 'apartments', 'apartments_uz', 'apartments_en',
+                  'apartments_ru', 'apartments_zh_hans', 'apartments_ar', 'phases', 'projectarea', 'images']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+
+        commonhouseaboutimage_files = request.FILES.getlist('commonadvimage')
+
+        validated_data.pop('commonhouseaboutimage_set', None)
+
+        commonhouseabout = CommonHouseAbout.objects.create(**validated_data)
+
+        for img in commonhouseaboutimage_files:
+            CommonHouseAboutImage.objects.create(commonhouse=commonhouseabout, image=img)
+
+        return commonhouseabout

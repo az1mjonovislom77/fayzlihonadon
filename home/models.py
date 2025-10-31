@@ -17,7 +17,7 @@ class CommonHouse(models.Model):
     longitude = models.FloatField(null=True, blank=True)
 
     def __str__(self):
-        return self.title
+        return str(self.title)
 
 
 class CommonHouseAdvImage(models.Model):
@@ -35,7 +35,7 @@ class CommonHouseAdvImage(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.commonhouse.title
+        return str(self.commonhouse.title)
 
 
 class CommonHouseMainImage(models.Model):
@@ -53,7 +53,7 @@ class CommonHouseMainImage(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.commonhouse.title
+        return str(self.commonhouse.title)
 
 
 class CommonHouseAbout(models.Model):
@@ -63,6 +63,9 @@ class CommonHouseAbout(models.Model):
     apartments = models.IntegerField(default=0)
     phases = models.IntegerField(default=0)
     projectarea = models.DecimalField(max_digits=100, decimal_places=2, default=0)
+
+    def __str__(self):
+        return str(self.commonhouse.title)
 
 
 class CommonHouseAboutImage(models.Model):
@@ -202,9 +205,9 @@ class InteriorPhotos(models.Model):
 
 class Basement(models.Model):
     home = models.ForeignKey(Home, on_delete=models.CASCADE, null=True, blank=True)
-    area = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
-    price = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
-    pricePerSqm = models.DecimalField(decimal_places=2, max_digits=10, null=True, blank=True)
+    area = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
+    price = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
+    pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
 
     def __str__(self):
         return self.home.name

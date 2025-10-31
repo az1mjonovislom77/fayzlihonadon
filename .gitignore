@@ -10,6 +10,7 @@ __pycache__/
 *.sqlite3
 
 # Media and Static files
+media/
 static_collected/ # If you collect static files here
 
 # Environment variables and sensitive data
