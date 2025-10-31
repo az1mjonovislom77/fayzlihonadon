@@ -1,6 +1,6 @@
 from django.db import models
 from django.core.validators import FileExtensionValidator
-
+from decimal import Decimal
 from utils.compressor import optimize_image_to_webp, check_image_size
 
 
@@ -107,6 +107,29 @@ class Home(models.Model):
     type = models.CharField(max_length=100, blank=True, null=True)
     region = models.CharField(max_length=100, blank=True, null=True)
 
+    def save(self, *args, **kwargs):
+        from home.models import Basement
+
+        if self.area and self.pricePerSqm:
+            self.price = Decimal(self.area) * Decimal(self.pricePerSqm)
+        basements = Basement.objects.filter(home=self)
+
+        if basements.exists():
+
+            basement_total_price = sum(b.price or Decimal(0) for b in basements)
+            basement_total_area = sum(b.area or Decimal(0) for b in basements)
+
+            home_price = self.price or Decimal(0)
+            home_area = self.area or Decimal(0)
+
+            self.totalprice = home_price + basement_total_price
+            self.totalarea = home_area + basement_total_area
+        else:
+            self.totalprice = Decimal(0)
+            self.totalarea = Decimal(0)
+
+        super().save(*args, **kwargs)
+
     def __str__(self):
         return str(self.id)
 
@@ -208,6 +231,14 @@ class Basement(models.Model):
     area = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
     pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
+
+    def save(self, *args, **kwargs):
+        if self.area and self.pricePerSqm:
+            self.price = Decimal(self.area) * Decimal(self.pricePerSqm)
+        super().save(*args, **kwargs)
+
+        if self.home:
+            self.home.save()
 
     def __str__(self):
         return self.home.name

@@ -1,6 +1,7 @@
 from django.contrib import admin
+from decimal import Decimal
 from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouseAdvImage,
-                     CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout, )
+                     CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout)
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -47,18 +48,55 @@ class CommonHouseAdmin(TranslationAdmin):
 
 
 @admin.register(CommonHouseAbout)
-class CommonHouseAdmin(TranslationAdmin):
-    list_display = ('id', 'projectarea')
+class CommonHouseAboutAdmin(TranslationAdmin):
+    list_display = ('id', 'projectarea', 'blocks', 'apartments', 'phases')
     list_filter = ('blocks',)
     inlines = [CommonHouseAboutInline]
 
 
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'price', 'area', 'home_number', 'buildingBlock')
+    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock')
     list_filter = ('region', 'floor', 'buildingBlock')
     search_fields = ('name', 'region', 'description', 'floor', 'buildingBlock')
     inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
+
+    def save_model(self, request, obj, form, change):
+        from .models import Basement
+
+        if obj.area and obj.pricePerSqm:
+            obj.price = Decimal(obj.area) * Decimal(obj.pricePerSqm)
+
+        basements = Basement.objects.filter(home=obj)
+
+        if basements.exists():
+            basement_total_price = sum(b.price or Decimal(0) for b in basements)
+            basement_total_area = sum(b.area or Decimal(0) for b in basements)
+
+            home_price = obj.price or Decimal(0)
+            home_area = obj.area or Decimal(0)
+
+            obj.totalprice = home_price + basement_total_price
+            obj.totalarea = home_area + basement_total_area
+        else:
+            obj.totalprice = Decimal(0)
+            obj.totalarea = Decimal(0)
+
+        super().save_model(request, obj, form, change)
+
+
+@admin.register(Basement)
+class BasementAdmin(admin.ModelAdmin):
+    list_display = ('id', 'home', 'area', 'pricePerSqm', 'price')
+
+    def save_model(self, request, obj, form, change):
+        if obj.area and obj.pricePerSqm:
+            obj.price = Decimal(obj.area) * Decimal(obj.pricePerSqm)
+
+        super().save_model(request, obj, form, change)
+
+        if obj.home:
+            obj.home.save()
 
 
 @admin.register(HomeImage)
@@ -90,8 +128,3 @@ class CommonHouseMainImageAdmin(admin.ModelAdmin):
 @admin.register(CommonHouseAdvImage)
 class CommonHouseAdvImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'commonhouse')
-
-
-@admin.register(Basement)
-class BasementAdmin(admin.ModelAdmin):
-    list_display = ('id', 'area', 'price', 'pricePerSqm')
