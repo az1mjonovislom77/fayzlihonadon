@@ -236,20 +236,20 @@ class CommonHouseAboutSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonHouseAbout
-        fields = ['id', 'commonhouse', 'description', 'description_uz', 'description_en', 'description_ru',
-                  'description_zh_hans', 'description_ar', 'blocks', 'apartments', 'apartments_uz', 'apartments_en',
-                  'apartments_ru', 'apartments_zh_hans', 'apartments_ar', 'phases', 'projectarea', 'images']
+        fields = [
+            'id', 'commonhouse', 'description', 'description_uz', 'description_en', 'description_ru',
+            'description_zh_hans', 'description_ar', 'blocks', 'apartments', 'apartments_uz', 'apartments_en',
+            'apartments_ru', 'apartments_zh_hans', 'apartments_ar', 'phases', 'projectarea', 'images']
 
     def create(self, validated_data):
         request = self.context.get('request')
-
-        commonhouseaboutimage_files = request.FILES.getlist('commonadvimage')
+        images = request.FILES.getlist('images')  # ✅ nomi front-endga mos bo‘lishi kerak
 
         validated_data.pop('commonhouseaboutimage_set', None)
 
         commonhouseabout = CommonHouseAbout.objects.create(**validated_data)
 
-        for img in commonhouseaboutimage_files:
-            CommonHouseAboutImage.objects.create(commonhouse=commonhouseabout, image=img)
+        for img in images:
+            CommonHouseAboutImage.objects.create(commonhouseabout=commonhouseabout, image=img)
 
         return commonhouseabout
