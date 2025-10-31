@@ -3,8 +3,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import HomePage, AdvertisementBanner, Reviews, WaitList
-from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer
+from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia
+from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
+    SocialMediaSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -84,6 +85,26 @@ class WaitListAPIView(APIView):
 
     def post(self, request):
         serializer = self.serializer_class(data=request.data)
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['SocialMedia'], request=SocialMediaSerializer, responses=SocialMediaSerializer)
+class SocialMediaAPIView(APIView):
+    serializer_class = SocialMediaSerializer
+
+    def get(self, request):
+        try:
+            socialmedia = SocialMedia.objects.all()
+        except SocialMedia.DoesNotExist:
+            return Response({"error": "SocialMedia topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(socialmedia, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
