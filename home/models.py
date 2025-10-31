@@ -259,7 +259,7 @@ class Basement(models.Model):
             home.save()
 
     def __str__(self):
-        return self.home.name
+        return str(self.home.name)
 
 
 class BasementImage(models.Model):
