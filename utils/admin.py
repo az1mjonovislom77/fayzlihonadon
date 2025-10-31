@@ -2,7 +2,7 @@ from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
 from utils.models import HomePage, HomePageImage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList, \
-    SocialMedia
+    SocialMedia, Contacts
 
 
 class HomePageImageInline(admin.TabularInline):
@@ -40,3 +40,8 @@ class WaitListAdmin(admin.ModelAdmin):
 @admin.register(SocialMedia)
 class SocialMediaAdmin(admin.ModelAdmin):
     list_display = ('id', 'name', 'link')
+
+
+@admin.register(Contacts)
+class ContactsAdmin(admin.ModelAdmin):
+    list_display = ('id', 'full_address', 'phone_number', 'email')

@@ -3,9 +3,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia
+from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
-    SocialMediaSerializer
+    SocialMediaSerializer, ContactsSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -101,6 +101,26 @@ class SocialMediaAPIView(APIView):
         except SocialMedia.DoesNotExist:
             return Response({"error": "SocialMedia topilmadi"}, status=status.HTTP_404_NOT_FOUND)
         serializer = self.serializer_class(socialmedia, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = self.serializer_class(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['Contacts'], request=ContactsSerializer, responses=ContactsSerializer)
+class ContactsAPIView(APIView):
+    serializer_class = ContactsSerializer
+
+    def get(self, request):
+        try:
+            contacts = Contacts.objects.all()
+        except Contacts.DoesNotExist:
+            return Response({"error": "Contacts topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+        serializer = self.serializer_class(contacts, many=True, context={'request': request})
         return Response(serializer.data)
 
     def post(self, request):
