@@ -3,9 +3,9 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
 
-from .models import Home, Basement, CommonHouse, CommonHouseAbout
+from .models import Home, Basement, CommonHouse, CommonHouseAbout, InProgress
 from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer, CommonHouseSerializer, \
-    CommonHouseAboutSerializer
+    CommonHouseAboutSerializer, InProgressSerializer
 
 
 @extend_schema(tags=['Home'])
@@ -91,6 +91,27 @@ class CommonHouseAboutAPIView(APIView):
 
     def post(self, request):
         serializer = CommonHouseAboutSerializer(data=request.data, context={'request': request})
+        if serializer.is_valid():
+            serializer.save()
+            return Response(serializer.data, status=status.HTTP_201_CREATED)
+        return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['InProgress'])
+class InProgressAPIView(APIView):
+    serializer_class = InProgressSerializer
+
+    def get(self, request):
+        try:
+            inprogress = InProgress.objects.all()
+        except InProgress.DoesNotExist:
+            return Response({"error": "InProgress topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = InProgressSerializer(inprogress, many=True, context={'request': request})
+        return Response(serializer.data)
+
+    def post(self, request):
+        serializer = InProgressSerializer(data=request.data, context={'request': request})
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)

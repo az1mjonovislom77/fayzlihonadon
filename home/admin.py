@@ -1,7 +1,8 @@
 from django.contrib import admin
 from decimal import Decimal
 from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouseAdvImage,
-                     CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout)
+                     CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout, InProgressImage,
+                     InProgress)
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -40,6 +41,11 @@ class CommonHouseAboutInline(admin.TabularInline):
     extra = 1
 
 
+class InProgressImageInline(admin.TabularInline):
+    model = InProgressImage
+    extra = 1
+
+
 @admin.register(CommonHouse)
 class CommonHouseAdmin(TranslationAdmin):
     list_display = ('id', 'title', 'handover')
@@ -52,6 +58,12 @@ class CommonHouseAboutAdmin(TranslationAdmin):
     list_display = ('id', 'projectarea', 'blocks', 'apartments', 'phases')
     list_filter = ('blocks',)
     inlines = [CommonHouseAboutInline]
+
+
+@admin.register(InProgress)
+class InProgressAdmin(TranslationAdmin):
+    list_display = ('id', 'title', 'progress', 'stage')
+    inlines = [InProgressImageInline, ]
 
 
 @admin.register(Home)

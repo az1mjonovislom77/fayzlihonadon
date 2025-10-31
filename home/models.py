@@ -265,3 +265,31 @@ class BasementImage(models.Model):
         db_table = 'basementimage'
         verbose_name = 'Basement image'
         verbose_name_plural = 'Basement images'
+
+
+class InProgress(models.Model):
+    title = models.CharField(max_length=100)
+    address = models.CharField(max_length=100, null=True, blank=True)
+    progress = models.CharField(max_length=100, null=True, blank=True)
+    stage = models.CharField(max_length=100, null=True, blank=True)
+    overdate = models.DateField(null=True, blank=True)
+    latitude = models.FloatField(null=True, blank=True)
+    longitude = models.FloatField(null=True, blank=True)
+
+    def __str__(self):
+        return self.title
+
+
+class InProgressImage(models.Model):
+    inprogress = models.ForeignKey(InProgress, on_delete=models.CASCADE)
+    image = models.ImageField(upload_to='inprogress/', validators=[
+        FileExtensionValidator(
+            allowed_extensions=['jpg', 'jpeg', 'png', 'svg', 'webp', 'JPG', 'JPEG', 'PNG', 'SVG', 'WEBP', 'heic',
+                                'heif']),
+        check_image_size])
+
+    def save(self, *args, **kwargs):
+        if self.image and not str(self.image.name).endswith('.webp'):
+            optimized_image = optimize_image_to_webp(self.image, quality=80)
+            self.image.save(optimized_image.name, optimized_image, save=False)
+        super().save(*args, **kwargs)

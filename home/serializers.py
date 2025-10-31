@@ -1,7 +1,7 @@
 from rest_framework import serializers
 
 from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage, CommonHouse, \
-    CommonHouseMainImage, CommonHouseAdvImage, CommonHouseAboutImage, CommonHouseAbout
+    CommonHouseMainImage, CommonHouseAdvImage, CommonHouseAboutImage, CommonHouseAbout, InProgress, InProgressImage
 
 
 class HomeImageSerializer(serializers.ModelSerializer):
@@ -243,7 +243,7 @@ class CommonHouseAboutSerializer(serializers.ModelSerializer):
 
     def create(self, validated_data):
         request = self.context.get('request')
-        images = request.FILES.getlist('images')  # ✅ nomi front-endga mos bo‘lishi kerak
+        images = request.FILES.getlist('images')
 
         validated_data.pop('commonhouseaboutimage_set', None)
 
@@ -253,3 +253,38 @@ class CommonHouseAboutSerializer(serializers.ModelSerializer):
             CommonHouseAboutImage.objects.create(commonhouseabout=commonhouseabout, image=img)
 
         return commonhouseabout
+
+
+class InProgressImageSerailizers(serializers.ModelSerializer):
+    image = serializers.SerializerMethodField()
+
+    class Meta:
+        model = CommonHouseMainImage
+        fields = ['id', 'image']
+
+    def get_image(self, obj):
+        request = self.context.get('request')
+        if obj.image and hasattr(obj.image, 'url'):
+            return request.build_absolute_uri(obj.image.url)
+        return None
+
+
+class InProgressSerializer(serializers.ModelSerializer):
+    images = InProgressImageSerailizers(source='inprogressimage_set', many=True, required=False)
+
+    class Meta:
+        model = InProgress
+        fields = ['id', 'title', 'address', 'progress', 'stage', 'overdate', 'latitude', 'longitude', 'images']
+
+    def create(self, validated_data):
+        request = self.context.get('request')
+        images = request.FILES.getlist('images')
+
+        validated_data.pop('inprogressimage_set', None)
+
+        inprogress = InProgress.objects.create(**validated_data)
+
+        for img in images:
+            InProgressImage.objects.create(inprogress=inprogress, image=img)
+
+        return inprogress
