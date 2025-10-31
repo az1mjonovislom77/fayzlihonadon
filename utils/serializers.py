@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews
+from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList
 
 
 class HomePageImageSerializer(serializers.ModelSerializer):
@@ -74,3 +74,9 @@ class ReviewsSerializer(serializers.ModelSerializer):
         model = Reviews
         fields = ['id', 'rating', 'text', 'text_uz', 'text_en', 'text_ru', 'text_zh_hans', 'text_ar', 'full_name',
                   'address', 'image']
+
+
+class WaitListSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = WaitList
+        fields = '__all__'
