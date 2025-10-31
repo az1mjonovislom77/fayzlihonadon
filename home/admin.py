@@ -56,7 +56,7 @@ class CommonHouseAboutAdmin(TranslationAdmin):
 
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock')
+    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number')
     list_filter = ('region', 'floor', 'buildingBlock')
     search_fields = ('name', 'region', 'description', 'floor', 'buildingBlock')
     inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
