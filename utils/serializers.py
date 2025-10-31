@@ -1,6 +1,6 @@
 from rest_framework import serializers
 
-from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner
+from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews
 
 
 class HomePageImageSerializer(serializers.ModelSerializer):
@@ -67,3 +67,10 @@ class AdvertisementBannerSerializer(serializers.ModelSerializer):
             AdvertisementBannerImage.objects.create(homepage=advertisementbanner, image=img)
 
         return advertisementbanner
+
+
+class ReviewsSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Reviews
+        fields = ['id', 'rating', 'text', 'text_uz', 'text_en', 'text_ru', 'text_zh_hans', 'text_ar', 'full_name',
+                  'address', 'image']

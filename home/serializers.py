@@ -274,7 +274,9 @@ class InProgressSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = InProgress
-        fields = ['id', 'title', 'address', 'progress', 'stage', 'overdate', 'latitude', 'longitude', 'images']
+        fields = ['id', 'title', 'title_en', 'title_uz', 'title_ru', 'title_zh_hans', 'title_ar', 'address', 'progress',
+                  'stage', 'stage_en', 'stage_uz', 'stage_ru', 'stage_zh_hans', 'stage_ar', 'overdate', 'latitude',
+                  'longitude', 'images']
 
     def create(self, validated_data):
         request = self.context.get('request')

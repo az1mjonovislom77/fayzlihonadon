@@ -1,7 +1,7 @@
 from django.contrib import admin
 from modeltranslation.admin import TranslationAdmin
 
-from utils.models import HomePage, HomePageImage, AdvertisementBannerImage, AdvertisementBanner
+from utils.models import HomePage, HomePageImage, AdvertisementBannerImage, AdvertisementBanner, Reviews
 
 
 class HomePageImageInline(admin.TabularInline):
@@ -24,3 +24,8 @@ class HomePageAdmin(TranslationAdmin):
 class AdvertisementBannerAdmin(TranslationAdmin):
     list_display = ('id', 'title', 'description')
     inlines = [AdvertisementBannerImageInline]
+
+
+@admin.register(Reviews)
+class ReviewsAdmin(TranslationAdmin):
+    list_display = ('id', 'rating', 'text', 'full_name', 'address')

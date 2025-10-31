@@ -92,8 +92,8 @@ class Home(models.Model):
     qualities = models.JSONField(null=True, blank=True, max_length=500)
     home_number = models.CharField(null=True, blank=True)
     entrance = models.IntegerField(null=True, blank=True)
-    totalprice = models.IntegerField(null=True, blank=True)
-    totalarea = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
+    totalprice = models.IntegerField(default=0)
+    totalarea = models.DecimalField(decimal_places=2, max_digits=100, default=0)
     status = models.CharField(max_length=100, null=True, blank=True)
     name = models.CharField(max_length=200, blank=True, null=True)
     price = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
@@ -108,20 +108,17 @@ class Home(models.Model):
     region = models.CharField(max_length=100, blank=True, null=True)
 
     def save(self, *args, **kwargs):
-        from home.models import Basement
+        from .models import Basement
 
         if self.area and self.pricePerSqm:
             self.price = Decimal(self.area) * Decimal(self.pricePerSqm)
         basements = Basement.objects.filter(home=self)
 
         if basements.exists():
-
             basement_total_price = sum(b.price or Decimal(0) for b in basements)
             basement_total_area = sum(b.area or Decimal(0) for b in basements)
-
             home_price = self.price or Decimal(0)
             home_area = self.area or Decimal(0)
-
             self.totalprice = home_price + basement_total_price
             self.totalarea = home_area + basement_total_area
         else:
@@ -239,6 +236,27 @@ class Basement(models.Model):
 
         if self.home:
             self.home.save()
+
+    def delete(self, *args, **kwargs):
+        home = self.home
+        super().delete(*args, **kwargs)
+
+        if home:
+            from .models import Basement
+            basements = Basement.objects.filter(home=home)
+
+            if basements.exists():
+                total_price = sum(b.price or Decimal(0) for b in basements)
+                total_area = sum(b.area or Decimal(0) for b in basements)
+
+                home.price = (home.area or Decimal(0)) * (home.pricePerSqm or Decimal(0))
+                home.totalprice = (home.price or Decimal(0)) + total_price
+                home.totalarea = (home.area or Decimal(0)) + total_area
+            else:
+                home.totalprice = Decimal(0)
+                home.totalarea = Decimal(0)
+
+            home.save()
 
     def __str__(self):
         return self.home.name

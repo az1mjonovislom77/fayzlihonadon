@@ -68,8 +68,8 @@ class InProgressAdmin(TranslationAdmin):
 
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number')
-    list_filter = ('region', 'floor', 'buildingBlock')
+    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number', 'status')
+    list_filter = ('region', 'floor', 'buildingBlock', 'status')
     search_fields = ('name', 'region', 'description', 'floor', 'buildingBlock')
     inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
 
@@ -109,6 +109,26 @@ class BasementAdmin(admin.ModelAdmin):
 
         if obj.home:
             obj.home.save()
+
+    def delete_model(self, request, obj):
+        home = obj.home
+        super().delete_model(request, obj)
+
+        if home:
+            from .models import Basement
+            basements = Basement.objects.filter(home=home)
+
+            if basements.exists():
+                total_price = sum(b.price or Decimal(0) for b in basements)
+                total_area = sum(b.area or Decimal(0) for b in basements)
+                home.price = (home.area or Decimal(0)) * (home.pricePerSqm or Decimal(0))
+                home.totalprice = (home.price or Decimal(0)) + total_price
+                home.totalarea = (home.area or Decimal(0)) + total_area
+            else:
+                home.totalprice = Decimal(0)
+                home.totalarea = Decimal(0)
+
+            home.save()
 
 
 @admin.register(HomeImage)
