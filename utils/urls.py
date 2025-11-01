@@ -1,6 +1,6 @@
 from django.urls import path
 from .views import (HomePageAPIView, AdvertisementBannerAPIView, ReviewsAPIView, WaitListAPIView, SocialMediaAPIView,
-                    ContactsAPIView, AboutCompanyAPIView)
+                    ContactsAPIView, AboutCompanyAPIView, HomeSearchAPIView)
 
 urlpatterns = [
     path('homepage/', HomePageAPIView.as_view(), name='homepage_list'),
@@ -10,5 +10,6 @@ urlpatterns = [
     path('social-media/', SocialMediaAPIView.as_view(), name='social_media_list'),
     path('contacts/', ContactsAPIView.as_view(), name='contacts_list'),
     path('aboutcompany/', AboutCompanyAPIView.as_view(), name='aboutcompany_list'),
+    path('home/search/', HomeSearchAPIView.as_view(), name='home-search'),
 
 ]

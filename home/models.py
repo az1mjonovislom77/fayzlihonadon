@@ -106,6 +106,7 @@ class Home(models.Model):
     description = models.TextField(max_length=500, blank=True, null=True)
     type = models.CharField(max_length=100, blank=True, null=True)
     region = models.CharField(max_length=100, blank=True, null=True)
+    overDate = models.DateField(blank=True, null=True)
 
     def save(self, *args, **kwargs):
         from .models import Basement

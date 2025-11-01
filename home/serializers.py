@@ -101,12 +101,12 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
-                  'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
-                  'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
-                  'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
-                  'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
-                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
+        fields = ['id', 'commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz', 'qualities_en',
+                  'qualities_ru', 'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice',
+                  'totalarea', 'status', 'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name',
+                  'name_uz', 'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms',
+                  'floor', 'totalFloors', 'yearBuilt', 'description', 'description_uz', 'description_en',
+                  'description_ru', 'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
                   'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
                   'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', ]
 
@@ -119,12 +119,12 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'buildingBlock', 'qualities', 'qualities_uz', 'qualities_en', 'qualities_ru',
-                  'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice', 'totalarea', 'status',
-                  'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name', 'name_uz', 'name_en',
-                  'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms', 'floor', 'totalFloors',
-                  'yearBuilt', 'description', 'description_uz', 'description_en', 'description_ru',
-                  'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
+        fields = ['commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz', 'qualities_en',
+                  'qualities_ru', 'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice',
+                  'totalarea', 'status', 'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name',
+                  'name_uz', 'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms',
+                  'floor', 'totalFloors', 'yearBuilt', 'description', 'description_uz', 'description_en',
+                  'description_ru', 'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
                   'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
                   'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', ]
 

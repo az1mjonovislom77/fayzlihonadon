@@ -2,10 +2,10 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from drf_yasg.utils import swagger_auto_schema
 from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
-    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer
+    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeSerializer, HomeFilterSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -149,3 +149,15 @@ class AboutCompanyAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['Search'])
+class HomeSearchAPIView(APIView):
+    serializer_class = HomeFilterSerializer
+
+    def post(self, request):
+        serializer = HomeFilterSerializer(data=request.data)
+        serializer.is_valid(raise_exception=True)
+        homes = serializer.filter_queryset()
+        result = HomeSerializer(homes, many=True)
+        return Response(result.data, status=status.HTTP_200_OK)

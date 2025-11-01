@@ -1,5 +1,6 @@
 from rest_framework import serializers
-
+from datetime import date
+from home.models import Home, CommonHouse
 from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList, \
     SocialMedia, Contacts, AboutCompany
 
@@ -99,3 +100,50 @@ class AboutCompanySerializer(serializers.ModelSerializer):
     class Meta:
         model = AboutCompany
         fields = '__all__'
+
+
+class HomeSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Home
+        fields = '__all__'
+
+
+class HomeFilterSerializer(serializers.Serializer):
+    projectName = serializers.CharField(required=False)
+    rooms = serializers.IntegerField(required=False)
+    floorFrom = serializers.IntegerField(required=False)
+    floorTo = serializers.IntegerField(required=False)
+    areaFrom = serializers.DecimalField(required=False, max_digits=100, decimal_places=2)
+    areaTo = serializers.DecimalField(required=False, max_digits=100, decimal_places=2)
+    overDate = serializers.CharField(required=False)
+
+    def filter_queryset(self):
+        data = self.validated_data
+        homes = Home.objects.all()
+
+        if data.get("projectName"):
+            homes = homes.filter(commonhouse__title__icontains=data["projectName"])
+        if data.get("rooms"):
+            homes = homes.filter(rooms=data["rooms"])
+        if data.get("floorFrom") and data.get("floorTo"):
+            homes = homes.filter(floor__gte=data["floorFrom"], floor__lte=data["floorTo"])
+        elif data.get("floorFrom"):
+            homes = homes.filter(floor__gte=data["floorFrom"])
+        elif data.get("floorTo"):
+            homes = homes.filter(floor__lte=data["floorTo"])
+        if data.get("areaFrom") and data.get("areaTo"):
+            homes = homes.filter(area__gte=data["areaFrom"], area__lte=data["areaTo"])
+        elif data.get("areaFrom"):
+            homes = homes.filter(area__gte=data["areaFrom"])
+        elif data.get("areaTo"):
+            homes = homes.filter(area__lte=data["areaTo"])
+        if data.get("overDate"):
+            try:
+                year = int(data["overDate"])
+                start_date = date(year, 1, 1)
+                end_date = date(year, 12, 31)
+                homes = homes.filter(overDate__range=(start_date, end_date))
+            except ValueError:
+                pass
+
+        return homes
