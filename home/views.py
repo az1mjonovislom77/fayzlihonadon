@@ -127,3 +127,23 @@ class HomeDetailGetAPIView(APIView):
         home = get_object_or_404(Home, pk=pk)
         serializer = HomeSerializerGet(home, context={'request': request})
         return Response(serializer.data)
+
+
+@extend_schema(tags=['CommonHouseDetail'])
+class CommonHouseDetailGetAPIView(APIView):
+    serializer_class = CommonHouseSerializer
+
+    def get(self, request, pk):
+        commonhouse = get_object_or_404(CommonHouse, pk=pk)
+        serializer = CommonHouseSerializer(commonhouse, context={'request': request})
+        return Response(serializer.data)
+
+
+@extend_schema(tags=['CommonHouseAboutDetail'])
+class CommonHouseAboutDetailGetAPIView(APIView):
+    serializer_class = CommonHouseAboutSerializer
+
+    def get(self, request, pk):
+        commonhouseabout = get_object_or_404(CommonHouseAbout, pk=pk)
+        serializer = CommonHouseAboutSerializer(commonhouseabout, context={'request': request})
+        return Response(serializer.data)
