@@ -1,3 +1,4 @@
+from django.shortcuts import get_object_or_404
 from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
@@ -116,3 +117,13 @@ class InProgressAPIView(APIView):
             serializer.save()
             return Response(serializer.data, status=status.HTTP_201_CREATED)
         return Response(serializer.errors, status=status.HTTP_400_BAD_REQUEST)
+
+
+@extend_schema(tags=['HomeDetail'])
+class HomeDetailGetAPIView(APIView):
+    serializer_class = HomeSerializerGet
+
+    def get(self, request, pk):
+        home = get_object_or_404(Home, pk=pk)
+        serializer = HomeSerializerGet(home, context={'request': request})
+        return Response(serializer.data)
