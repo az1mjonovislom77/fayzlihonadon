@@ -14,11 +14,9 @@ def import_homes_from_json(json_path):
     created_count = 0
 
     for item in data:
-        # unnecessary fields
         item.pop('id', None)
         item.pop('commonhouse', None)
 
-        # --- pricePerArea → pricePerSqm ---
         if 'pricePerArea' in item:
             price_str = str(item.pop('pricePerArea')).replace(',', '').strip()
             try:
@@ -108,27 +106,23 @@ def import_homes_from_json(json_path):
             ]
         }
 
-        # --- name (5 tilda bir xil) ---
         names = {
-            'name_uz': "FAYZLI XONADONLAR",
-            'name_en': "FAYZLI XONADONLAR",
-            'name_ru': "FAYZLI XONADONLAR",
-            'name_zh_hans': "FAYZLI XONADONLAR",
-            'name_ar': "FAYZLI XONADONLAR",
+            'name_uz': "FAYZLI XONADONLAR KITOB",
+            'name_en': "FAYZLI XONADONLAR KITOB",
+            'name_ru': "FAYZLI XONADONLAR KITOB",
+            'name_zh_hans': "FAYZLI XONADONLAR KITOB",
+            'name_ar': "FAYZLI XONADONLAR KITOB",
         }
 
-        # --- avtomatik maydonlar ---
         item['buildingBlock'] = "1"
         item['status'] = "SALE"
 
-        # qo‘shamiz
         item.update(descriptions)
         item.update(regions)
         item.update(types)
         item.update(qualities)
         item.update(names)
 
-        # faqat modelda bor maydonlarni tanlaymiz
         filtered = {k: v for k, v in item.items() if k in model_fields}
 
         Home.objects.create(**filtered)
