@@ -111,23 +111,30 @@ class Home(models.Model):
 
     def save(self, *args, **kwargs):
         from .models import Basement
+        from decimal import Decimal
+
+        creating = self.pk is None
 
         if self.area and self.pricePerSqm:
             self.price = Decimal(self.area) * Decimal(self.pricePerSqm)
-        basements = Basement.objects.filter(home=self)
-
-        if basements.exists():
-            basement_total_price = sum(b.price or Decimal(0) for b in basements)
-            basement_total_area = sum(b.area or Decimal(0) for b in basements)
-            home_price = self.price or Decimal(0)
-            home_area = self.area or Decimal(0)
-            self.totalprice = home_price + basement_total_price
-            self.totalarea = home_area + basement_total_area
-        else:
-            self.totalprice = Decimal(0)
-            self.totalarea = Decimal(0)
 
         super().save(*args, **kwargs)
+
+        if not creating:
+            basements = Basement.objects.filter(home=self)
+
+            if basements.exists():
+                basement_total_price = sum(b.price or Decimal(0) for b in basements)
+                basement_total_area = sum(b.area or Decimal(0) for b in basements)
+                home_price = self.price or Decimal(0)
+                home_area = self.area or Decimal(0)
+                self.totalprice = home_price + basement_total_price
+                self.totalarea = home_area + basement_total_area
+            else:
+                self.totalprice = Decimal(0)
+                self.totalarea = Decimal(0)
+
+            super().save(update_fields=['totalprice', 'totalarea'])
 
     def __str__(self):
         return str(self.id)

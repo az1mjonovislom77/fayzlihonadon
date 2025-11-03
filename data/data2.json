@@ -1,0 +1,562 @@
+[
+  {
+    "home_number": "1",
+    "floor": "1",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "2",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "3",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "4",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "5",
+    "floor": "2",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "6",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "7",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "8",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "9",
+    "floor": "3",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "10",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "11",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "12",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "13",
+    "floor": "4",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "14",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "15",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "16",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "17",
+    "floor": "5",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "18",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "19",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "20",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "21",
+    "floor": "1",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "22",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "23",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "24",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "25",
+    "floor": "2",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "26",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "27",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "28",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "29",
+    "floor": "3",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "30",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "31",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "32",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "33",
+    "floor": "4",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "34",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "35",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "36",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "37",
+    "floor": "5",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "38",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "39",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "40",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "41",
+    "floor": "1",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "42",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "43",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "44",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "45",
+    "floor": "2",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "46",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "47",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "48",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "49",
+    "floor": "3",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "50",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "51",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "52",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "53",
+    "floor": "4",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "54",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "55",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "56",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "57",
+    "floor": "5",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "58",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "59",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "60",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "61",
+    "floor": "1",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "62",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "63",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "64",
+    "floor": "1",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7700000"
+  },
+  {
+    "home_number": "65",
+    "floor": "2",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "66",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "67",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "68",
+    "floor": "2",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7800000"
+  },
+  {
+    "home_number": "69",
+    "floor": "3",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "70",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "71",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "72",
+    "floor": "3",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "7300000"
+  },
+  {
+    "home_number": "73",
+    "floor": "4",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "74",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "75",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "76",
+    "floor": "4",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6700000"
+  },
+  {
+    "home_number": "77",
+    "floor": "5",
+    "rooms": "2",
+    "area": " 48.15 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "78",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 28.52 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "79",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 31.31 ",
+    "pricePerSqm": "6400000"
+  },
+  {
+    "home_number": "80",
+    "floor": "5",
+    "rooms": "1",
+    "area": " 29.04 ",
+    "pricePerSqm": "6400000"
+  }
+]

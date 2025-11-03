@@ -1,6 +1,6 @@
 import json
 from decimal import Decimal, InvalidOperation
-from home.models import Home, CommonHouse
+from home.models import Home
 
 
 def import_homes_from_json(json_path):
@@ -14,8 +14,11 @@ def import_homes_from_json(json_path):
     created_count = 0
 
     for item in data:
+        # unnecessary fields
         item.pop('id', None)
+        item.pop('commonhouse', None)
 
+        # --- pricePerArea → pricePerSqm ---
         if 'pricePerArea' in item:
             price_str = str(item.pop('pricePerArea')).replace(',', '').strip()
             try:
@@ -29,6 +32,7 @@ def import_homes_from_json(json_path):
             except InvalidOperation:
                 item['pricePerSqm'] = None
 
+        # --- area ---
         if 'area' in item:
             area_str = str(item['area']).replace(',', '').strip()
             try:
@@ -36,6 +40,7 @@ def import_homes_from_json(json_path):
             except InvalidOperation:
                 item['area'] = None
 
+        # --- default multilingual fields ---
         descriptions = {
             'description_uz': "Yorug‘, ekologik hududda joylashgan yaxshi rejalashtirilgan kvartira",
             'description_en': "Bright apartment with a good layout in an eco-friendly area",
@@ -103,15 +108,30 @@ def import_homes_from_json(json_path):
             ]
         }
 
-        item.pop('commonhouse', None)
+        # --- name (5 tilda bir xil) ---
+        names = {
+            'name_uz': "FAYZLI XONADONLAR",
+            'name_en': "FAYZLI XONADONLAR",
+            'name_ru': "FAYZLI XONADONLAR",
+            'name_zh_hans': "FAYZLI XONADONLAR",
+            'name_ar': "FAYZLI XONADONLAR",
+        }
+
+        # --- avtomatik maydonlar ---
+        item['buildingBlock'] = "1"
+        item['status'] = "SALE"
+
+        # qo‘shamiz
         item.update(descriptions)
         item.update(regions)
         item.update(types)
         item.update(qualities)
+        item.update(names)
 
+        # faqat modelda bor maydonlarni tanlaymiz
         filtered = {k: v for k, v in item.items() if k in model_fields}
 
         Home.objects.create(**filtered)
         created_count += 1
 
-    print(f"✅ {created_count} ta uy muvaffaqiyatli saqlandi.")
+    print(f"✅ {created_count} ta uy muvaffaqiyatli saqlandi (name=FAYZLI XONADONLAR, block=1, status=SALE).")
