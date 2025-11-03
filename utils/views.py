@@ -2,7 +2,6 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
-from drf_yasg.utils import swagger_auto_schema
 from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
     SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeSerializer, HomeFilterSerializer

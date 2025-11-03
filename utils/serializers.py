@@ -1,6 +1,6 @@
 from rest_framework import serializers
 from datetime import date
-from home.models import Home, CommonHouse
+from home.models import Home
 from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList, \
     SocialMedia, Contacts, AboutCompany
 

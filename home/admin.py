@@ -2,7 +2,7 @@ from django.contrib import admin
 from decimal import Decimal
 from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouseAdvImage,
                      CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout, InProgressImage,
-                     InProgress)
+                     InProgress, DownPayment)
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -46,6 +46,16 @@ class InProgressImageInline(admin.TabularInline):
     extra = 1
 
 
+class DownPaymentInline(admin.TabularInline):
+    model = DownPayment
+    extra = 1
+
+
+@admin.register(DownPayment)
+class DownPaymentAdmin(TranslationAdmin):
+    list_display = ('id', 'home', 'percent', 'description', 'price')
+
+
 @admin.register(CommonHouse)
 class CommonHouseAdmin(TranslationAdmin):
     list_display = ('id', 'title', 'handover')
@@ -71,7 +81,7 @@ class HomeAdmin(TranslationAdmin):
     list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number', 'status')
     list_filter = ('region', 'floor', 'buildingBlock', 'status')
     search_fields = ('name', 'region', 'description', 'floor', 'buildingBlock')
-    inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline]
+    inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline, DownPaymentInline]
 
     def save_model(self, request, obj, form, change):
         from .models import Basement

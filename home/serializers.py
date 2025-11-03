@@ -1,7 +1,8 @@
 from rest_framework import serializers
 
 from .models import Home, HomeImage, Basement, FloorPlan, MasterPlan, InteriorPhotos, BasementImage, CommonHouse, \
-    CommonHouseMainImage, CommonHouseAdvImage, CommonHouseAboutImage, CommonHouseAbout, InProgress, InProgressImage
+    CommonHouseMainImage, CommonHouseAdvImage, CommonHouseAboutImage, CommonHouseAbout, InProgress, InProgressImage, \
+    DownPayment
 
 
 class HomeImageSerializer(serializers.ModelSerializer):
@@ -101,7 +102,8 @@ class HomeSerializerGet(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['id', 'commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz', 'qualities_en',
+        fields = ['id', 'commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz',
+                  'qualities_en',
                   'qualities_ru', 'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice',
                   'totalarea', 'status', 'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name',
                   'name_uz', 'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms',
@@ -119,7 +121,8 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz', 'qualities_en',
+        fields = ['commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz',
+                  'qualities_en',
                   'qualities_ru', 'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice',
                   'totalarea', 'status', 'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name',
                   'name_uz', 'name_en', 'name_ru', 'name_zh_hans', 'name_ar', 'price', 'pricePerSqm', 'area', 'rooms',
@@ -291,3 +294,10 @@ class InProgressSerializer(serializers.ModelSerializer):
             InProgressImage.objects.create(inprogress=inprogress, image=img)
 
         return inprogress
+
+
+class DownPaymentSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = DownPayment
+        fields = ['id', 'home', 'percent', 'description', 'description_uz', 'description_en', 'description_ru',
+                  'description_zh_hans', 'description_ar', 'price']

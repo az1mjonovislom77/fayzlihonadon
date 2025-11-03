@@ -1,4 +1,5 @@
 from django.urls import path
+
 from .views import (HomePageAPIView, AdvertisementBannerAPIView, ReviewsAPIView, WaitListAPIView, SocialMediaAPIView,
                     ContactsAPIView, AboutCompanyAPIView, HomeSearchAPIView)
 

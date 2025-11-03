@@ -2,6 +2,7 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from decimal import Decimal
 from utils.compressor import optimize_image_to_webp, check_image_size
+from utils.models import HomePage
 
 
 class CommonHouse(models.Model):
@@ -130,6 +131,16 @@ class Home(models.Model):
 
     def __str__(self):
         return str(self.id)
+
+
+class DownPayment(models.Model):
+    home = models.ForeignKey(Home, on_delete=models.CASCADE, null=True, blank=True)
+    percent = models.FloatField(null=True, blank=True)
+    description = models.CharField(null=True, blank=True, max_length=250)
+    price = models.DecimalField(decimal_places=2, max_digits=100, blank=True, null=True)
+
+    def __str__(self):
+        return f'{self.percent}{self.price}{self.description}'
 
 
 class HomeImage(models.Model):

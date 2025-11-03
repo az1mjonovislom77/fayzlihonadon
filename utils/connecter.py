@@ -17,5 +17,5 @@ def conn_commonhouse_by_id(commonhouse_id):
 
 #python manage.py shell
 
-# from home.utils import conn_commonhouse_by_id
+# from utils.connecter import conn_commonhouse_by_id
 # conn_commonhouse_by_id(3)

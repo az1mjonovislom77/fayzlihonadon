@@ -1,6 +1,6 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from .models import Home, CommonHouse, CommonHouseAbout, InProgress
+from .models import Home, CommonHouse, CommonHouseAbout, InProgress, DownPayment
 
 
 @register(Home)
@@ -21,3 +21,8 @@ class CommonHouseAboutTranslation(TranslationOptions):
 @register(InProgress)
 class InProgressTranslation(TranslationOptions):
     fields = ('title', 'stage', 'description')
+
+
+@register(DownPayment)
+class DownPaymentTranslation(TranslationOptions):
+    fields = ('description',)
