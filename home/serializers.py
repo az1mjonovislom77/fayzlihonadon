@@ -195,8 +195,9 @@ class CommonHouseSerializer(serializers.ModelSerializer):
 
     class Meta:
         model = CommonHouse
-        fields = ['title', 'title_en', 'title_uz', 'title_ru', 'title_zh_hans', 'title_ar', 'description',
-                  'description_uz', 'description_en', 'description_ru', 'description_zh_hans', 'description_ar',
+        fields = ['id', 'title', 'title_en', 'title_uz', 'title_ru', 'title_zh_hans', 'title_ar', 'description',
+                  'description_uz',
+                  'description_en', 'description_ru', 'description_zh_hans', 'description_ar',
                   'handover', 'country', 'region', 'district', 'street', 'house', 'latitude', 'longitude',
                   'commonadvimage', 'commonmainimage']
 
