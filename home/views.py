@@ -15,13 +15,12 @@ class HomeGetAPIView(APIView):
 
     def get(self, request):
         try:
-            home = Home.objects.all()
+            home = Home.objects.order_by('?')[:20]
         except Home.DoesNotExist:
             return Response({"error": "Homelar topilmadi"}, status=status.HTTP_404_NOT_FOUND)
 
         serializer = HomeSerializerGet(home, many=True, context={'request': request})
         return Response(serializer.data)
-
 
 @extend_schema(tags=['Home'])
 class HomePostAPIView(APIView):
