@@ -160,5 +160,5 @@ class HomeSearchAPIView(APIView):
         serializer = HomeFilterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         homes = serializer.filter_queryset()
-        result = HomeSerializerGet(homes, many=True)
+        result = HomeSerializerGet(homes, many=True, context={'request': request})
         return Response(result.data, status=status.HTTP_200_OK)
