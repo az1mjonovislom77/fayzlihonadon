@@ -102,12 +102,6 @@ class AboutCompanySerializer(serializers.ModelSerializer):
         fields = '__all__'
 
 
-class HomeSerializer(serializers.ModelSerializer):
-    class Meta:
-        model = Home
-        fields = '__all__'
-
-
 class HomeFilterSerializer(serializers.Serializer):
     projectName = serializers.CharField(required=False)
     rooms = serializers.IntegerField(required=False)
@@ -119,7 +113,12 @@ class HomeFilterSerializer(serializers.Serializer):
 
     def filter_queryset(self):
         data = self.validated_data
-        homes = Home.objects.all()
+        homes = Home.objects.all().prefetch_related(
+            'homeimage_set',
+            'floorplan_set',
+            'masterplan_set',
+            'interiorphotos_set'
+        )
 
         if data.get("projectName"):
             homes = homes.filter(commonhouse__title__icontains=data["projectName"])

@@ -2,9 +2,11 @@ from rest_framework import status
 from drf_spectacular.utils import extend_schema
 from rest_framework.response import Response
 from rest_framework.views import APIView
+
+from home.serializers import HomeSerializerGet
 from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
-    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeSerializer, HomeFilterSerializer
+    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeFilterSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -158,5 +160,5 @@ class HomeSearchAPIView(APIView):
         serializer = HomeFilterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
         homes = serializer.filter_queryset()
-        result = HomeSerializer(homes, many=True)
+        result = HomeSerializerGet(homes, many=True)
         return Response(result.data, status=status.HTTP_200_OK)
