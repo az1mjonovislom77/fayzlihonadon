@@ -2,7 +2,6 @@ from django.db import models
 from django.core.validators import FileExtensionValidator
 from decimal import Decimal
 from utils.compressor import optimize_image_to_webp, check_image_size
-from utils.models import HomePage
 
 
 class CommonHouse(models.Model):
