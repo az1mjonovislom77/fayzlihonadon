@@ -1,6 +1,6 @@
 from modeltranslation.translator import register, TranslationOptions
 
-from .models import HomePage, AdvertisementBanner, Reviews, AboutCompany
+from .models import HomePage, AdvertisementBanner, Reviews, AboutCompany, Location
 
 
 @register(HomePage)
@@ -21,3 +21,8 @@ class ReviewsTranslation(TranslationOptions):
 @register(AboutCompany)
 class AboutCompanyTranslation(TranslationOptions):
     fields = ('description',)
+
+
+@register(Location)
+class LocationTranslation(TranslationOptions):
+    fields = ('address', 'description')

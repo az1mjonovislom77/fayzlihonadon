@@ -2,7 +2,7 @@ from rest_framework import serializers
 from datetime import date
 from home.models import Home
 from .models import HomePageImage, HomePage, AdvertisementBannerImage, AdvertisementBanner, Reviews, WaitList, \
-    SocialMedia, Contacts, AboutCompany
+    SocialMedia, Contacts, AboutCompany, Location
 
 
 class HomePageImageSerializer(serializers.ModelSerializer):
@@ -146,3 +146,9 @@ class HomeFilterSerializer(serializers.Serializer):
                 pass
 
         return homes
+
+
+class LocationSerializer(serializers.ModelSerializer):
+    class Meta:
+        model = Location
+        fields = '__all__'

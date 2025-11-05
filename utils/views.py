@@ -4,9 +4,9 @@ from rest_framework.response import Response
 from rest_framework.views import APIView
 
 from home.serializers import HomeSerializerGet
-from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany
+from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany, Location
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
-    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeFilterSerializer
+    SocialMediaSerializer, ContactsSerializer, AboutCompanySerializer, HomeFilterSerializer, LocationSerializer
 
 
 @extend_schema(tags=['HomePage'])
@@ -162,3 +162,17 @@ class HomeSearchAPIView(APIView):
         homes = serializer.filter_queryset()
         result = HomeSerializerGet(homes, many=True, context={'request': request})
         return Response(result.data, status=status.HTTP_200_OK)
+
+
+@extend_schema(tags=['Location'])
+class LocationAPIView(APIView):
+    serializer_class = LocationSerializer
+
+    def get(self, request):
+        try:
+            location = Location.objects.all()
+        except Location.DoesNotExist:
+            return Response({"error": "Location topilmadi"}, status=status.HTTP_404_NOT_FOUND)
+
+        serializer = LocationSerializer(location, many=True, context={'request': request})
+        return Response(serializer.data)
