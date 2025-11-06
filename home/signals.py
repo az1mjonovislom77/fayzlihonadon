@@ -3,6 +3,7 @@ from django.dispatch import receiver
 from decimal import Decimal
 from .models import Basement, Home
 
+
 def update_home_totals(home):
     if not home:
         return

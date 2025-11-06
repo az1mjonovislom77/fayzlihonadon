@@ -121,7 +121,7 @@ class HomeSerializerPost(serializers.ModelSerializer):
 
     class Meta:
         model = Home
-        fields = ['commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz',
+        fields = ['id', 'commonhouse', 'buildingBlock', 'overDate', 'qualities', 'qualities_uz',
                   'qualities_en',
                   'qualities_ru', 'qualities_zh_hans', 'qualities_ar', 'home_number', 'entrance', 'totalprice',
                   'totalarea', 'status', 'status_uz', 'status_en', 'status_ru', 'status_zh_hans', 'status_ar', 'name',

@@ -1,8 +1,8 @@
 from django.urls import path
 
-from .views import (HomeGetAPIView, HomePostAPIView, BasementAPIView, CommonHouseAPIView, CommonHouseAboutAPIView,
+from .views import (HomeGetAPIView, HomePostAPIView, CommonHouseAPIView, CommonHouseAboutAPIView,
                     InProgressAPIView, HomeDetailGetAPIView, CommonHouseDetailGetAPIView,
-                    CommonHouseAboutDetailGetAPIView, DownPaymentAPIView)
+                    CommonHouseAboutDetailGetAPIView, BasementAPIView, DownPaymentAPIView)
 
 urlpatterns = [
     path('all/', HomeGetAPIView.as_view(), name='home_list'),
