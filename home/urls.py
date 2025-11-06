@@ -2,10 +2,11 @@ from django.urls import path
 
 from .views import (HomeGetAPIView, HomePostAPIView, CommonHouseAPIView, CommonHouseAboutAPIView,
                     InProgressAPIView, HomeDetailGetAPIView, CommonHouseDetailGetAPIView,
-                    CommonHouseAboutDetailGetAPIView, BasementAPIView, DownPaymentAPIView)
+                    CommonHouseAboutDetailGetAPIView, BasementAPIView, DownPaymentAPIView, HomeAPIView)
 
 urlpatterns = [
     path('all/', HomeGetAPIView.as_view(), name='home_list'),
+    path('all/pagination/', HomeAPIView.as_view(), name='home_pagination_list'),
     path('create/', HomePostAPIView.as_view(), name='home_post'),
     path('detail/<int:pk>/', HomeDetailGetAPIView.as_view(), name='home_detail'),
     path('basement/', BasementAPIView.as_view(), name='basement_list'),

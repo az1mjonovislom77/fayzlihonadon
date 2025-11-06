@@ -1,9 +1,20 @@
 from drf_spectacular.utils import extend_schema
 from rest_framework.generics import ListCreateAPIView, RetrieveAPIView, CreateAPIView, ListAPIView
-
 from .models import Home, Basement, CommonHouse, CommonHouseAbout, InProgress, DownPayment
+from rest_framework.pagination import PageNumberPagination
 from .serializers import HomeSerializerGet, HomeSerializerPost, BasementSerializer, CommonHouseSerializer, \
     CommonHouseAboutSerializer, InProgressSerializer, DownPaymentSerializer
+
+
+class HomePagination(PageNumberPagination):
+    page_size = 20
+
+
+@extend_schema(tags=['Home'])
+class HomeAPIView(ListAPIView):
+    queryset = Home.objects.all()
+    serializer_class = HomeSerializerGet
+    pagination_class = HomePagination
 
 
 @extend_schema(tags=['Home'])
