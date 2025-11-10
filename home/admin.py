@@ -78,7 +78,7 @@ class InProgressAdmin(TranslationAdmin):
 
 @admin.register(Home)
 class HomeAdmin(TranslationAdmin):
-    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number', 'status')
+    list_display = ('id', 'name', 'area', 'price', 'totalarea', 'totalprice', 'buildingBlock', 'home_number', 'status', 'is_active')
     list_filter = ('region', 'floor', 'buildingBlock', 'status')
     search_fields = ('name', 'region', 'description', 'floor', 'buildingBlock')
     inlines = [HomeImageInline, FloorPlanInline, MasterPlanInline, InteriorPhotosInline, DownPaymentInline]
