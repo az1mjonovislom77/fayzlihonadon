@@ -91,7 +91,7 @@ class Home(models.Model):
     buildingBlock = models.CharField(null=True, blank=True, max_length=200)
     qualities = models.JSONField(null=True, blank=True, max_length=500)
     home_number = models.CharField(null=True, blank=True)
-    entrance = models.IntegerField(null=True, blank=True)
+    entrance = models.CharField(max_length=200, null=True, blank=True)
     totalprice = models.IntegerField(default=0)
     totalarea = models.DecimalField(decimal_places=2, max_digits=100, default=0)
     status = models.CharField(max_length=100, null=True, blank=True)
