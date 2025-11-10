@@ -295,7 +295,7 @@ class BasementImage(models.Model):
         super().save(*args, **kwargs)
 
     def __str__(self):
-        return self.basement.home.name
+        return str(self.id)
 
     class Meta:
         db_table = 'basementimage'

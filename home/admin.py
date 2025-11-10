@@ -2,7 +2,7 @@ from django.contrib import admin
 from decimal import Decimal
 from .models import (Home, HomeImage, FloorPlan, MasterPlan, InteriorPhotos, Basement, CommonHouseAdvImage,
                      CommonHouseMainImage, CommonHouse, CommonHouseAboutImage, CommonHouseAbout, InProgressImage,
-                     InProgress, DownPayment)
+                     InProgress, DownPayment, BasementImage)
 from modeltranslation.admin import TranslationAdmin
 
 
@@ -145,6 +145,11 @@ class BasementAdmin(admin.ModelAdmin):
 class HomeImageAdmin(admin.ModelAdmin):
     list_display = ('id', 'home')
     search_fields = ('home__name',)
+
+
+@admin.register(BasementImage)
+class BasementImageAdmin(admin.ModelAdmin):
+    list_display = ('id', 'basement')
 
 
 @admin.register(FloorPlan)
