@@ -278,7 +278,7 @@ class Basement(models.Model):
             home.save()
 
     def __str__(self):
-        return str(self.area)
+        return str(self.id)
 
 
 class BasementImage(models.Model):
