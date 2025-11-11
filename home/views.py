@@ -12,15 +12,19 @@ class HomePagination(PageNumberPagination):
 
 @extend_schema(tags=['Home'])
 class HomeAPIView(ListAPIView):
-    queryset = Home.objects.all()
     serializer_class = HomeSerializerGet
     pagination_class = HomePagination
+
+    def get_queryset(self):
+        return Home.objects.filter(is_active=True)
 
 
 @extend_schema(tags=['Home'])
 class HomeGetAPIView(ListAPIView):
-    queryset = Home.objects.order_by('?')[:20]
     serializer_class = HomeSerializerGet
+
+    def get_queryset(self):
+        return Home.objects.filter(is_active=True).order_by('?')[:20]
 
 
 @extend_schema(tags=['Home'])
