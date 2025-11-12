@@ -15,7 +15,7 @@ class CommonHouseTranslation(TranslationOptions):
 
 @register(CommonHouseAbout)
 class CommonHouseAboutTranslation(TranslationOptions):
-    fields = ('description', 'apartments')
+    fields = ('description',)
 
 
 @register(InProgress)

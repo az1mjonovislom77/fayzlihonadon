@@ -242,8 +242,7 @@ class CommonHouseAboutSerializer(serializers.ModelSerializer):
         model = CommonHouseAbout
         fields = [
             'id', 'commonhouse', 'description', 'description_uz', 'description_en', 'description_ru',
-            'description_zh_hans', 'description_ar', 'blocks', 'apartments', 'apartments_uz', 'apartments_en',
-            'apartments_ru', 'apartments_zh_hans', 'apartments_ar', 'phases', 'projectarea', 'images']
+            'description_zh_hans', 'description_ar', 'blocks', 'apartments', 'phases', 'projectarea', 'images']
 
     def create(self, validated_data):
         request = self.context.get('request')
