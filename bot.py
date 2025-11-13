@@ -2,6 +2,7 @@ import asyncio
 import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
+from datetime import datetime
 
 BOT_TOKEN = "8455252838:AAHQ3IO3w_dxqgpYbDrZmVcu6_JQ8IgGBo8"
 API_URL = "https://api.fayzlixonadonlar.uz/utils/waitlist/"
@@ -26,14 +27,20 @@ async def show_waitlist(message: types.Message):
             return
 
         for item in data[:5]:
+            iso_date = item['date']
+            try:
+                dt = datetime.fromisoformat(iso_date)
+                formatted_date = dt.strftime("%d-%m-%Y %H:%M")
+            except:
+                formatted_date = iso_date
+
             text = (
                 f"👤 Ism: {item['full_name']}\n"
                 f"📧 Email: {item['email']}\n"
                 f"📞 Telefon: {item['phone_number']}\n"
                 f"📝 Mavzu: {item['theme']}\n"
                 f"💬 Xabar: {item['message']}\n"
-                f"📅 Sana: {item['date']}\n"
-                "------------------------"
+                f"📅 Sana: {formatted_date}\n"
             )
             await message.answer(text)
 
