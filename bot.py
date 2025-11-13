@@ -39,9 +39,7 @@ async def start(message: types.Message):
 
     await message.answer(
         '''👋 Salom! Kunlik so`rovlarni ko‘rish uchun /dailylist buyrug‘ini, 
-Barcha so`rovlarni ko`rish uchun esa /list buyrug`ini yuboring...
-Agar siz admin bo'lsangiz va yangi foydalanuvchi qo'shmoqchi bo'lsangiz /add_user buyrug'ini yuboring.'''
-    )
+Barcha so`rovlarni ko`rish uchun esa /list buyrug`ini yuboring...''')
 
 
 @dp.message(Command("list"))
