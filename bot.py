@@ -16,7 +16,7 @@ dp = Dispatcher()
 async def start(message: types.Message):
     await message.answer('''👋 Salom! Kunlik so`rovlarni ko‘rish uchun /dailylist buyrug‘ini, 
     
-                               Barcha so`rovlarni ko`rish uchun esa /list buyrug`ini yuboring...''')
+Barcha so`rovlarni ko`rish uchun esa /list buyrug`ini yuboring...''')
 
 
 
