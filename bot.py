@@ -1,11 +1,12 @@
 import asyncio
-import requests
 from aiogram import Bot, Dispatcher, types
 from aiogram.filters import Command
 from datetime import datetime
+import requests
 
 BOT_TOKEN = "8455252838:AAHQ3IO3w_dxqgpYbDrZmVcu6_JQ8IgGBo8"
-API_URL = "https://api.fayzlixonadonlar.uz/utils/waitlist/"
+API_URL_ALL = "https://api.fayzlixonadonlar.uz/utils/waitlist/"
+API_URL_DAILY = "https://api.fayzlixonadonlar.uz/utils/daily_waitlist/"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -18,8 +19,17 @@ async def start(message: types.Message):
 
 @dp.message(Command("list"))
 async def show_waitlist(message: types.Message):
+    await fetch_and_send_waitlist(message, API_URL_ALL)
+
+
+@dp.message(Command("daily-list"))
+async def show_daily_waitlist(message: types.Message):
+    await fetch_and_send_waitlist(message, API_URL_DAILY)
+
+
+async def fetch_and_send_waitlist(message: types.Message, url: str):
     try:
-        response = requests.get(API_URL)
+        response = requests.get(url)
         data = response.json()
 
         if not data:

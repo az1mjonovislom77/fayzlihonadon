@@ -3,7 +3,7 @@ from drf_spectacular.utils import extend_schema
 from rest_framework.generics import ListCreateAPIView
 from rest_framework.response import Response
 from rest_framework.views import APIView
-
+from datetime import datetime
 from home.serializers import HomeSerializerGet
 from .models import HomePage, AdvertisementBanner, Reviews, WaitList, SocialMedia, Contacts, AboutCompany, Location
 from .serializers import HomePageSerializer, AdvertisementBannerSerializer, ReviewsSerializer, WaitListSerializer, \
@@ -32,6 +32,15 @@ class ReviewsAPIView(ListCreateAPIView):
 class WaitListAPIView(ListCreateAPIView):
     queryset = WaitList.objects.all()
     serializer_class = WaitListSerializer
+
+
+@extend_schema(tags=['WaitList'])
+class DailyWaitListAPIView(ListCreateAPIView):
+    serializer_class = WaitListSerializer
+
+    def get_queryset(self):
+        today = datetime.now().date()
+        return WaitList.objects.filter(date__date=today).order_by('-date')
 
 
 @extend_schema(tags=['SocialMedia'])
