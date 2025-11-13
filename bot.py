@@ -22,7 +22,7 @@ async def show_waitlist(message: types.Message):
     await fetch_and_send_waitlist(message, API_URL_ALL)
 
 
-@dp.message(Command("daily-list"))
+@dp.message(Command("dailylist"))
 async def show_daily_waitlist(message: types.Message):
     await fetch_and_send_waitlist(message, API_URL_DAILY)
 
