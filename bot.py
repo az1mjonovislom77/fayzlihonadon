@@ -14,7 +14,7 @@ dp = Dispatcher()
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
-    await message.answer("👋 Salom! Ma'lumotlarni ko‘rish uchun /list buyrug‘ini bosing.")
+    await message.answer("👋 Salom! Kunlik so`rovlarni ko‘rish uchun /dailylist buyrug‘ini bosing. Barcha so`rovlarni ko`rish uchun esa /list buyrug`ini. ")
 
 
 @dp.message(Command("list"))
