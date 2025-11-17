@@ -99,6 +99,7 @@ class HomeSerializerGet(serializers.ModelSerializer):
     floorplan = FloorPlanSerializer(source='floorplan_set', many=True, required=False)
     masterplan = MasterPlanSerializer(source='masterplan_set', many=True, required=False)
     interiorphotos = InteriorPhotosSerializer(source='interiorphotos_set', many=True, required=False)
+    basement = BasementSerializer(read_only=True, many=True)
 
     class Meta:
         model = Home
@@ -110,7 +111,7 @@ class HomeSerializerGet(serializers.ModelSerializer):
                   'floor', 'totalFloors', 'yearBuilt', 'description', 'description_uz', 'description_en',
                   'description_ru', 'description_zh_hans', 'description_ar', 'type', 'type_uz', 'type_en', 'type_ru',
                   'type_zh_hans', 'type_ar', 'region', 'region_uz', 'region_en', 'region_ru', 'region_zh_hans',
-                  'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', ]
+                  'region_ar', 'images', 'floorplan', 'masterplan', 'interiorphotos', 'basement']
 
 
 class HomeSerializerPost(serializers.ModelSerializer):

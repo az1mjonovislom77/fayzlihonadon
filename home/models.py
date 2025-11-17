@@ -243,7 +243,7 @@ class InteriorPhotos(models.Model):
 
 
 class Basement(models.Model):
-    home = models.ForeignKey(Home, on_delete=models.CASCADE, null=True, blank=True)
+    home = models.ForeignKey(Home, on_delete=models.CASCADE, null=True, blank=True, related_name='basement')
     area = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
     price = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
     pricePerSqm = models.DecimalField(decimal_places=2, max_digits=100, null=True, blank=True)
