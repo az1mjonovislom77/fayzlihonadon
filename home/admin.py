@@ -20,6 +20,10 @@ class MasterPlanInline(admin.TabularInline):
     model = MasterPlan
     extra = 1
 
+class BasementImageInline(admin.TabularInline):
+    model = BasementImage
+    extra = 1
+
 
 class InteriorPhotosInline(admin.TabularInline):
     model = InteriorPhotos
@@ -110,6 +114,7 @@ class HomeAdmin(TranslationAdmin):
 @admin.register(Basement)
 class BasementAdmin(admin.ModelAdmin):
     list_display = ('id', 'home', 'area', 'pricePerSqm', 'price')
+    inlines = [BasementImageInline, ]
 
     def save_model(self, request, obj, form, change):
         if obj.area and obj.pricePerSqm:
