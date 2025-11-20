@@ -68,7 +68,7 @@ class HomeSearchAPIView(APIView):
     def post(self, request):
         serializer = HomeFilterSerializer(data=request.data)
         serializer.is_valid(raise_exception=True)
-        homes = serializer.filter_queryset()
+        homes = serializer.filter_queryset().filter(is_active=True)
         result = HomeSerializerGet(homes, many=True, context={'request': request})
         return Response(result.data, status=status.HTTP_200_OK)
 
