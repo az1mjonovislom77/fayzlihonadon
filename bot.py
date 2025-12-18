@@ -13,6 +13,7 @@ USERS_FILE = "allowed_users.json"
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
+last_sent_id = None
 
 
 def load_users():
@@ -28,6 +29,54 @@ def save_users(users):
 
 
 allowed_users = load_users()
+
+
+async def realtime_checker():
+    global last_sent_id
+
+    while True:
+        try:
+            response = requests.get(API_URL_ALL)
+            data = response.json()
+
+            if data:
+                latest = data[0]
+                current_id = latest.get("id")
+
+                if last_sent_id is None:
+                    last_sent_id = current_id
+
+                elif current_id != last_sent_id:
+                    last_sent_id = current_id
+
+                    iso_date = latest.get('date', '')
+                    try:
+                        dt = datetime.fromisoformat(iso_date)
+                        formatted_date = dt.strftime("%d-%m-%Y %H:%M")
+                    except:
+                        formatted_date = iso_date
+
+                    text = (
+                        "🚨 YANGI SO‘ROV KELDI!\n\n"
+                        f"👤 Ism: {latest.get('full_name', '')}\n"
+                        f"📧 Email: {latest.get('email', '')}\n"
+                        f"📞 Telefon: {latest.get('phone_number', '')}\n"
+                        f"📝 Mavzu: {latest.get('theme', '')}\n"
+                        f"💬 Xabar: {latest.get('message', '')}\n"
+                        f"📅 Sana: {formatted_date}"
+                    )
+
+                    for username in allowed_users:
+                        try:
+                            user = await bot.get_chat(username)
+                            await bot.send_message(user.id, text)
+                        except:
+                            pass
+
+        except Exception as e:
+            print("Realtime error:", e)
+
+        await asyncio.sleep(60)  # ⏱ 1 minut
 
 
 @dp.message(Command("start"))
@@ -117,6 +166,8 @@ async def fetch_and_send_waitlist(message: types.Message, url: str):
 
 async def main():
     print("🤖 Bot ishga tushdi...")
+
+    asyncio.create_task(realtime_checker())
     await dp.start_polling(bot)
 
 
