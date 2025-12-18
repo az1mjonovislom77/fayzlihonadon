@@ -10,6 +10,20 @@ BOT_TOKEN = "8455252838:AAHQ3IO3w_dxqgpYbDrZmVcu6_JQ8IgGBo8"
 API_URL_ALL = "https://api.fayzlixonadonlar.uz/utils/waitlist/"
 API_URL_DAILY = "https://api.fayzlixonadonlar.uz/utils/daily_waitlist/"
 USERS_FILE = "allowed_users.json"
+USER_IDS_FILE = "user_ids.json"
+
+
+def load_user_ids():
+    if os.path.exists(USER_IDS_FILE):
+        with open(USER_IDS_FILE, "r") as f:
+            return json.load(f)
+    return {}
+
+
+def save_user_ids(data):
+    with open(USER_IDS_FILE, "w") as f:
+        json.dump(data, f)
+
 
 bot = Bot(token=BOT_TOKEN)
 dp = Dispatcher()
@@ -29,6 +43,7 @@ def save_users(users):
 
 
 allowed_users = load_users()
+user_ids = load_user_ids()
 
 
 async def realtime_checker():
@@ -49,42 +64,34 @@ async def realtime_checker():
                 elif current_id != last_sent_id:
                     last_sent_id = current_id
 
-                    iso_date = latest.get('date', '')
-                    try:
-                        dt = datetime.fromisoformat(iso_date)
-                        formatted_date = dt.strftime("%d-%m-%Y %H:%M")
-                    except:
-                        formatted_date = iso_date
-
-                    text = (
-                        "🚨 YANGI SO‘ROV KELDI!\n\n"
-                        f"👤 Ism: {latest.get('full_name', '')}\n"
-                        f"📧 Email: {latest.get('email', '')}\n"
-                        f"📞 Telefon: {latest.get('phone_number', '')}\n"
-                        f"📝 Mavzu: {latest.get('theme', '')}\n"
-                        f"💬 Xabar: {latest.get('message', '')}\n"
-                        f"📅 Sana: {formatted_date}"
-                    )
+                    text = "🚨 YANGI SO‘ROV KELDI!"
 
                     for username in allowed_users:
-                        try:
-                            user = await bot.get_chat(username)
-                            await bot.send_message(user.id, text)
-                        except:
-                            pass
+                        chat_id = user_ids.get(username)
+                        if chat_id:
+                            await bot.send_message(chat_id, text)
 
         except Exception as e:
             print("Realtime error:", e)
 
-        await asyncio.sleep(60)  # ⏱ 1 minut
+        await asyncio.sleep(60)
 
 
 @dp.message(Command("start"))
 async def start(message: types.Message):
     username = message.from_user.username
+    chat_id = message.from_user.id
+
+    if not username:
+        await message.answer("❌ Avval Telegram profilingizga username qo‘ying.")
+        return
+
     if username not in allowed_users:
         await message.answer("❌ Sizga ruxsat berilmagan.")
         return
+
+    user_ids[username] = chat_id
+    save_user_ids(user_ids)
 
     await message.answer(
         '''👋 Salom! Kunlik so`rovlarni ko‘rish uchun /dailylist buyrug‘ini, 
