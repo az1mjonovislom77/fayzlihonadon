@@ -76,7 +76,7 @@ async def realtime_checker():
         except Exception as e:
             print("Realtime error:", e)
 
-        await asyncio.sleep(60)
+        await asyncio.sleep(30)
 
 
 @dp.message(Command("start"))
