@@ -5,6 +5,7 @@ from datetime import datetime
 import requests
 import json
 import os
+import aiohttp
 
 BOT_TOKEN = "8455252838:AAHQ3IO3w_dxqgpYbDrZmVcu6_JQ8IgGBo8"
 API_URL_ALL = "https://api.fayzlixonadonlar.uz/utils/waitlist/"
@@ -51,8 +52,9 @@ async def realtime_checker():
 
     while True:
         try:
-            response = requests.get(API_URL_ALL)
-            data = response.json()
+            async with aiohttp.ClientSession() as session:
+                async with session.get(API_URL_ALL) as resp:
+                    data = await resp.json()
 
             if data:
                 latest = data[0]
