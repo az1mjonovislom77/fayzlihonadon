@@ -74,7 +74,22 @@ async def realtime_checker():
                     last_sent_id = current_id
                     print("YANGI SO‘ROV TOPILDI")
 
-                    text = "🚨 YANGI SO‘ROV KELDI!"
+                    iso_date = latest.get('date', '')
+                    try:
+                        dt = datetime.fromisoformat(iso_date)
+                        formatted_date = dt.strftime("%d-%m-%Y %H:%M")
+                    except:
+                        formatted_date = iso_date
+
+                    text = (
+                        "🚨 YANGI SO‘ROV KELDI!\n\n"
+                        f"👤 Ism: {latest.get('full_name', '')}\n"
+                        f"📧 Email: {latest.get('email', '')}\n"
+                        f"📞 Telefon: {latest.get('phone_number', '')}\n"
+                        f"📝 Mavzu: {latest.get('theme', '')}\n"
+                        f"💬 Xabar: {latest.get('message', '')}\n"
+                        f"📅 Sana: {formatted_date}"
+                    )
 
                     for username in allowed_users:
                         chat_id = user_ids.get(username)
