@@ -56,23 +56,15 @@ async def realtime_checker():
                 async with session.get(API_URL_ALL) as resp:
                     data = await resp.json()
 
-            # 👇 AYNAN SHU YERGA
-            print("REALTIME ISHLADI")
-            print("data bor:", bool(data))
-
             if data:
-                latest = data[-1]  # ⚠️ muhim (oxirgi element)
+                latest = data[-1]
                 current_id = latest.get("id")
-
-                print("current_id:", current_id, "last_sent_id:", last_sent_id)
 
                 if last_sent_id is None:
                     last_sent_id = current_id
-                    print("BIRINCHI ISHGA TUSHDI, ID SAQLANDI")
 
                 elif current_id != last_sent_id:
                     last_sent_id = current_id
-                    print("YANGI SO‘ROV TOPILDI")
 
                     iso_date = latest.get('date', '')
                     try:
@@ -93,7 +85,6 @@ async def realtime_checker():
 
                     for username in allowed_users:
                         chat_id = user_ids.get(username)
-                        print("YUBORILAYAPTI:", username, chat_id)
                         if chat_id:
                             await bot.send_message(chat_id, text)
 
@@ -101,7 +92,6 @@ async def realtime_checker():
             print("Realtime error:", e)
 
         await asyncio.sleep(30)
-
 
 
 @dp.message(Command("start"))
