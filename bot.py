@@ -88,9 +88,9 @@ async def start(message: types.Message):
         await message.answer("❌ Avval Telegram profilingizga username qo‘ying.")
         return
 
-    if username not in allowed_users:
-        await message.answer("❌ Sizga ruxsat berilmagan.")
-        return
+    # if username not in allowed_users:
+    #     await message.answer("❌ Sizga ruxsat berilmagan.")
+    #     return
 
     user_ids[username] = chat_id
     save_user_ids(user_ids)
