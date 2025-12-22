@@ -59,7 +59,7 @@ class InProgressAPIView(ListCreateAPIView):
 
 @extend_schema(tags=['HomeDetail'])
 class HomeDetailGetAPIView(RetrieveAPIView):
-    queryset = Home.objects.all()
+    queryset = Home.objects.filter(is_active=True)
     serializer_class = HomeSerializerGet
     lookup_field = 'pk'
 
